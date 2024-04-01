@@ -4,10 +4,9 @@ import LoginPage from '../login/login-page';
 
 type Props = {
     isAuthenticated: boolean;
-    redirectTo: string;
 }
 
-function PrivateRoutes({isAuthenticated,redirectTo}: Props): JSX.Element{
+function PrivateRoutes({isAuthenticated}: Props): JSX.Element{
     if(isAuthenticated){
         return (
             <Routes>

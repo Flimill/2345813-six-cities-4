@@ -9,7 +9,7 @@ type AppProps = {
 function App({offersCount}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
-      <PrivateRoutes isAuthenticated={false} redirectTo="/login" />
+      <PrivateRoutes isAuthenticated={false} />
       <PublicRoutes offersCount = {offersCount}/>
     </BrowserRouter>
    
