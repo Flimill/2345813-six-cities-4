@@ -9,24 +9,24 @@ type Props = {
 }
 
 function PublicRoutes({offersCount}: Props): JSX.Element{
-    return (
-      <Routes>
-        <Route path="/" element={ <MainPage offersCount = {offersCount} />}>
-        </Route>
-  
-        <Route path="/login" element={ <LoginPage/>}>
-        </Route>
-        
-        <Route path="/offer/:id" element={ <OfferPage/>}>
-        </Route>
-  
-        <Route
-          path="*"
-          element={<Error404Page/>}
-        />
-  
-      </Routes>
-    )
+  return (
+    <Routes>
+      <Route path="/" element={ <MainPage offersCount = {offersCount} />}>
+      </Route>
+
+      <Route path="/login" element={ <LoginPage/>}>
+      </Route>
+
+      <Route path="/offer/:id" element={ <OfferPage/>}>
+      </Route>
+
+      <Route
+        path="*"
+        element={<Error404Page/>}
+      />
+
+    </Routes>
+  );
 }
 
 export default PublicRoutes;

@@ -12,7 +12,7 @@ function App({offersCount}: AppProps): JSX.Element {
       <PrivateRoutes isAuthenticated={false} />
       <PublicRoutes offersCount = {offersCount}/>
     </BrowserRouter>
-   
+
   );
 }
 
