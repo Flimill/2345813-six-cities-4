@@ -1,4 +1,6 @@
-import MainPage from '../main/main-page';
+import { BrowserRouter} from 'react-router-dom';
+import PublicRoutes from '../routes/public-routes';
+import PrivateRoutes from '../routes/private-routes';
 
 type AppProps = {
   offersCount: number;
@@ -6,7 +8,11 @@ type AppProps = {
 
 function App({offersCount}: AppProps): JSX.Element {
   return (
-    <MainPage offersCount = {offersCount} />
+    <BrowserRouter>
+      <PrivateRoutes isAuthenticated={false} redirectTo="/login" />
+      <PublicRoutes offersCount = {offersCount}/>
+    </BrowserRouter>
+   
   );
 }
 
