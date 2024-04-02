@@ -12,7 +12,8 @@ function FavoriteList({ favoritesCount, favorites }: FavoriteListProps): JSX.Ele
   for (let i = 0; i < favoritesCount && i < favorites.length; i++) {
     offerComponents.push(<FavoriteCard key={i} favorite={favorites[i]} />);
   }
-  return <>{offerComponents}</>; 
+  //eslint-disable-next-line
+  return <>{offerComponents}</>;
 }
 
 export default FavoriteList;

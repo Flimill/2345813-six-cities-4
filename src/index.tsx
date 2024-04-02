@@ -12,7 +12,7 @@ root.render(
     <App
       offersCount = {5}
       offers={offers}
-      isAuthenticated = {true}
+      isAuthenticated
     />
   </React.StrictMode>
 );

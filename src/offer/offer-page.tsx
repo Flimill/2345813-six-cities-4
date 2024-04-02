@@ -1,6 +1,6 @@
 //import { useParams } from "react-router-dom";
 
-import ReiewForm from "./review-form";
+import ReiewForm from './review-form';
 
 function OfferPage(): JSX.Element {
   //const { id } = useParams<{ id: string }>();

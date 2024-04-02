@@ -12,7 +12,8 @@ function OfferList({ offersCount, offers }: OfferListProps): JSX.Element {
   for (let i = 0; i < offersCount && i < offers.length; i++) {
     offerComponents.push(<OfferCard key={i} offer={offers[i]} />);
   }
-  return <>{offerComponents}</>; 
+  //eslint-disable-next-line
+  return <>{offerComponents}</>;
 }
 
 export default OfferList;

@@ -1,4 +1,4 @@
-import { OfferCardData } from "../mocks/offers";
+import { OfferCardData } from '../mocks/offers';
 
 
 type OfferCardProps = {
@@ -6,17 +6,17 @@ type OfferCardProps = {
 };
 
 function OfferCard({ offer }: OfferCardProps): JSX.Element {
-  let mark: JSX.Element | null = null; 
+  let mark: JSX.Element | null = null;
   if (offer.mark) {
     mark = <div className="place-card__mark"><span>Premium</span></div>;
   }
-  const ratingWidth = (offer.rating / 5) * 100 + '%';
-  let offer_link = "/offer/"+offer.id;
+  const ratingWidth = `${(offer.rating / 5) * 100 }%`;
+  const offerLink = `/offer/${offer.id}`;
   return (
     <article className="cities__card place-card">
       {mark}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href={offer_link}>
+        <a href={offerLink}>
           <img className="place-card__image" src={offer.imageUrl} width="260" height="200" alt={offer.name} />
         </a>
       </div>
@@ -40,7 +40,7 @@ function OfferCard({ offer }: OfferCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href={offer_link}>{offer.name}</a>
+          <a href={offerLink}>{offer.name}</a>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>

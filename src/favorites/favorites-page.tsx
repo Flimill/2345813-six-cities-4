@@ -23,7 +23,7 @@ function FavoritesPage({ favoritesCount, favorites }: FavoritesProps): JSX.Eleme
                 </div>
               </div>
               <div className="favorites__places">
-                 {<FavoriteList favoritesCount={favoritesCount} favorites={favorites} />}
+                {<FavoriteList favoritesCount={favoritesCount} favorites={favorites} />}
               </div>
             </li>
           </ul>

@@ -8,7 +8,7 @@ import { OfferCardData } from '../mocks/offers';
 
 type AppProps = {
   offersCount: number;
-  offers: OfferCardData[]; 
+  offers: OfferCardData[];
   isAuthenticated: boolean;
 };
 
@@ -17,13 +17,9 @@ function App({ offersCount, offers, isAuthenticated }: AppProps): JSX.Element {
     <BrowserRouter>
       <Routes>
         {isAuthenticated ? (
-          <>
-            <Route path="/favorites" element={<FavoritesPage favoritesCount={offersCount} favorites={offers} />} />
-          </>
+          <Route path="/favorites" element={<FavoritesPage favoritesCount={offersCount} favorites={offers} />} />
         ) : (
-          <>
-            <Route path="/favorites" element={<LoginPage />} />
-          </>
+          <Route path="/favorites" element={<LoginPage />} />
         )}
 
         <Route path="/" element={<MainPage offersCount={offersCount} offers={offers} />} />
