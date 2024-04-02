@@ -1,19 +1,29 @@
-const styleWidth = {
-  width: '80%',
+import { OfferCardData } from "../mocks/offers";
+
+
+type OfferCardProps = {
+  offer: OfferCardData;
 };
 
-function OfferCard(): JSX.Element {
+function OfferCard({ offer }: OfferCardProps): JSX.Element {
+  let mark: JSX.Element | null = null; 
+  if (offer.mark) {
+    mark = <div className="place-card__mark"><span>Premium</span></div>;
+  }
+  const ratingWidth = (offer.rating / 5) * 100 + '%';
+  let offer_link = "/offer/"+offer.id;
   return (
     <article className="cities__card place-card">
+      {mark}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
-          <img className="place-card__image" src="img/room.jpg" width="260" height="200" alt="Place image"/>
+        <a href={offer_link}>
+          <img className="place-card__image" src={offer.imageUrl} width="260" height="200" alt={offer.name} />
         </a>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;80</b>
+            <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
@@ -25,18 +35,17 @@ function OfferCard(): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={styleWidth}></span>
+            <span style={{ width: ratingWidth }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">Wood and stone place</a>
+          <a href={offer_link}>{offer.name}</a>
         </h2>
-        <p className="place-card__type">Room</p>
+        <p className="place-card__type">{offer.type}</p>
       </div>
     </article>
   );
 }
 
 export default OfferCard;
-
