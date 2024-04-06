@@ -9,18 +9,18 @@ export type OfferCardData ={
     imageUrl: string;
   }
 
-  export type City = {
+export type City = {
     title: string;
     lat: number;
     lng: number;
     zoom: number;
   };
-  
-  export type Point = {
+
+export type Point = {
     name: string;
     lat: number;
     lng: number;
   };
-  
-  export type Points = Point[];
-  
+
+export type Points = Point[];
+

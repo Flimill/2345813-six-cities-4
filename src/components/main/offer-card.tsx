@@ -1,4 +1,4 @@
-import { OfferCardData } from "../../types/types";
+import { OfferCardData } from '../../types/types';
 import {MouseEvent, useState} from 'react';
 
 type OfferCardProps = {
@@ -14,7 +14,7 @@ function OfferCard({ offer,handleListItemHover }: OfferCardProps): JSX.Element {
   const [isBookmarkActive, setIsBookmarkActive] = useState(true);
 
   const toggleBookmark = () => {
-    setIsBookmarkActive(prevState => !prevState);
+    setIsBookmarkActive((prevState) => !prevState);
   };
   const ratingWidth = `${(offer.rating / 5) * 100 }%`;
   const offerLink = `/offer/${offer.id}`;

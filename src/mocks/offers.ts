@@ -1,4 +1,4 @@
-import { OfferCardData } from "../types/types";
+import { OfferCardData } from '../types/types';
 const offers: OfferCardData[] = [
   {
     name: 'Beautiful & luxurious studio at great location',

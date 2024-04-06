@@ -10,7 +10,7 @@ type OfferListProps = {
 
 function OfferList({ offersCount, offers,onListItemHover }: OfferListProps): JSX.Element {
   const offerComponents: JSX.Element[] = [];
-  
+
   const handleListItemHover = (event: MouseEvent<HTMLLIElement>) => {
     event.preventDefault();
     const placeCardElement = event.currentTarget;
