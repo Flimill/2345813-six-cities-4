@@ -1,14 +1,4 @@
-export interface OfferCardData {
-    name: string;
-    type: string;
-    id: number;
-    price: number;
-    rating: number;
-    mark:boolean;
-    features: string[];
-    imageUrl: string;
-  }
-
+import { OfferCardData } from "../types/types";
 const offers: OfferCardData[] = [
   {
     name: 'Beautiful & luxurious studio at great location',

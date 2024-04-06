@@ -21,6 +21,6 @@
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
   },
-  "include": ["src", "vite.config.ts", "src/main/offer-card/.tsx"],
+  "include": ["src", "vite.config.ts", "src/components/main/offer-card/.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

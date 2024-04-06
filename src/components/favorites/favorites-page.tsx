@@ -1,4 +1,4 @@
-import { OfferCardData } from '../mocks/offers';
+import { OfferCardData } from '../../types/types';
 import FavoriteList from './favorite-list';
 
 type FavoritesProps = {

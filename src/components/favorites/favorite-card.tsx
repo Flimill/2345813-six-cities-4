@@ -1,29 +1,29 @@
-import { OfferCardData } from '../mocks/offers';
+import { OfferCardData } from '../../mocks/offers';
 
-
-type OfferCardProps = {
-  offer: OfferCardData;
+type FavoriteCardProps = {
+  favorite: OfferCardData;
 };
 
-function OfferCard({ offer }: OfferCardProps): JSX.Element {
+function FavoriteCard({ favorite }: FavoriteCardProps): JSX.Element {
   let mark: JSX.Element | null = null;
-  if (offer.mark) {
+  if (favorite.mark) {
     mark = <div className="place-card__mark"><span>Premium</span></div>;
   }
-  const ratingWidth = `${(offer.rating / 5) * 100 }%`;
-  const offerLink = `/offer/${offer.id}`;
+  const ratingWidth = `${(favorite.rating / 5) * 100 }%`;
+  const offerLink = `/offer/${favorite.id}`;
   return (
-    <article className="cities__card place-card">
+
+    <article className="favorites__card place-card">
       {mark}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className="favorites__image-wrapper place-card__image-wrapper">
         <a href={offerLink}>
-          <img className="place-card__image" src={offer.imageUrl} width="260" height="200" alt={offer.name} />
+          <img className="place-card__image" src={favorite.imageUrl} width="150" height="110" alt={favorite.name}/>
         </a>
       </div>
-      <div className="place-card__info">
+      <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{offer.price}</b>
+            <b className="place-card__price-value">&euro;{favorite.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
@@ -40,12 +40,12 @@ function OfferCard({ offer }: OfferCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href={offerLink}>{offer.name}</a>
+          <a href={offerLink}>{favorite.name}</a>
         </h2>
-        <p className="place-card__type">{offer.type}</p>
+        <p className="place-card__type">{favorite.type}</p>
       </div>
     </article>
   );
 }
 
-export default OfferCard;
+export default FavoriteCard;
