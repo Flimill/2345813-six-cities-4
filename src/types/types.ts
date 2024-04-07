@@ -24,3 +24,16 @@ export type Point = {
 
 export type Points = Point[];
 
+export type Review = {
+  user_name: string;
+  text: string;
+  rating: number;
+}
+
+export type Reviews = Review[]
+
+export type MapSize = {
+  height: string;
+  width: string;
+
+}

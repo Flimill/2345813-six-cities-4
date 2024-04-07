@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { City, OfferCardData, Point, Points } from '../../types/types';
-import Map from './map';
-import OfferList from './offer-list';
+import { City, MapSize, OfferCardData, Point, Points } from '../../types/types';
+import Map from '../map/map';
+import OfferList from '../offer-list/offer-list';
 
 type MainProps = {
   offersCount: number;
@@ -12,6 +12,10 @@ type MainProps = {
 };
 
 function MainPage({ offersCount, offers,city, points }: MainProps): JSX.Element {
+  const mapSize: MapSize = {
+    height: '750px',
+    width: '100%'
+  };
 
   const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(
     undefined
@@ -117,7 +121,7 @@ function MainPage({ offersCount, offers,city, points }: MainProps): JSX.Element 
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map">{<Map city={city} points={points} selectedPoint={selectedPoint}/>}</section>
+              <section className="cities__map map">{<Map city={city} points={points} selectedPoint={selectedPoint} mapSize={mapSize}/>}</section>
             </div>
           </div>
         </div>
