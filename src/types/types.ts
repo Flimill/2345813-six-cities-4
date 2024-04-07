@@ -25,7 +25,7 @@ export type Point = {
 export type Points = Point[];
 
 export type Review = {
-  user_name: string;
+  userName: string;
   text: string;
   rating: number;
 }
