@@ -4,17 +4,15 @@ import LoginPage from '../login/login-page';
 import MainPage from '../main/main-page';
 import OfferPage from '../offer/offer-page';
 import Error404Page from '../error/error404-page';
-import { City, OfferCardData, Points } from '../../types/types';
+import { OfferCardData } from '../../types/types';
 
 type AppProps = {
   offersCount: number;
   offers: OfferCardData[];
   isAuthenticated: boolean;
-  city: City;
-  points: Points;
 };
 
-function App({ offersCount, offers, isAuthenticated, city, points }: AppProps): JSX.Element {
+function App({ offersCount, offers, isAuthenticated}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -24,7 +22,7 @@ function App({ offersCount, offers, isAuthenticated, city, points }: AppProps): 
           <Route path="/favorites" element={<LoginPage />} />
         )}
 
-        <Route path="/" element={<MainPage offersCount={offersCount} offers={offers} city={city} points={points}/>} />
+        <Route path="/" element={<MainPage offersCount={offersCount} />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/offer/:id" element={<OfferPage />} />
         <Route path="*" element={<Error404Page />} />

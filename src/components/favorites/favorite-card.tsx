@@ -5,10 +5,7 @@ type FavoriteCardProps = {
 };
 
 function FavoriteCard({ favorite }: FavoriteCardProps): JSX.Element {
-  let mark: JSX.Element | null = null;
-  if (favorite.mark) {
-    mark = <div className="place-card__mark"><span>Premium</span></div>;
-  }
+  const mark: JSX.Element = <div>{favorite.mark && <div className="place-card__mark" ><span>Premium</span></div>}</div>;
   const ratingWidth = `${(favorite.rating / 5) * 100 }%`;
   const offerLink = `/offer/${favorite.id}`;
   return (

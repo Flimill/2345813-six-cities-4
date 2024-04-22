@@ -7,13 +7,15 @@ type FavoriteListProps = {
 };
 
 function FavoriteList({ favoritesCount, favorites }: FavoriteListProps): JSX.Element {
-  const offerComponents: JSX.Element[] = [];
 
-  for (let i = 0; i < favoritesCount && i < favorites.length; i++) {
-    offerComponents.push(<FavoriteCard key={i} favorite={favorites[i]} />);
-  }
-  //eslint-disable-next-line
-  return <>{offerComponents}</>;
+
+  return (
+    <>
+      {favorites.slice(0, favoritesCount).map((favorite) => (
+        <FavoriteCard key={favorite.id} favorite={favorite} />
+      ))}
+    </>
+  );
 }
 
 export default FavoriteList;

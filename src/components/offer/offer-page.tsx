@@ -1,24 +1,35 @@
 import { REVIEWS } from '../../mocks/reviews';
 import ReviewSection from './review-section';
 import Map from '../map/map';
-import { CITY } from '../../mocks/city';
-import { POINTS } from '../../mocks/points';
 import { useState } from 'react';
-import { MapSize, Point } from '../../types/types';
-import OfferList from '../offer-list/offer-list';
-import OfferCardData from '../../mocks/offers';
+import { MapSize, Point} from '../../types/types';
+import OfferListComponent from '../offer-list/offer-list-component';
+
+import { useParams } from 'react-router-dom';
+import OFFERS from '../../mocks/offers';
+import { cityPoints } from '../../mocks/city-points';
+import cityList from '../../mocks/city-list';
+import cityOffers from '../../mocks/city-OFFERS';
+
+const mapSize: MapSize = {
+  height: '100%',
+  width: '100%'
+};
 
 function OfferPage(): JSX.Element {
+  const { id } = useParams();
+  const foundOffer = OFFERS.find((offer) => offer.id === Number(id));
+
   const reviewsCount = 1;
   const reviews = REVIEWS;
-  const city = CITY;
+  let city:string = cityList[0];
+  if (foundOffer){
+    city = foundOffer.city;
+  }
   const offersCount = 3;
-  const points = POINTS.slice(0, offersCount);
-  const offers = OfferCardData.slice(0, offersCount);
-  const mapSize: MapSize = {
-    height: '100%',
-    width: '100%'
-  };
+  const offers = cityOffers[city].slice(0, offersCount);
+  const points = offers.map((offer) => offer.point);
+
   const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(
     undefined
   );
@@ -182,14 +193,14 @@ function OfferPage(): JSX.Element {
             </div>
           </div>
           <section className="offer__map map">
-            {<Map city={city} points={points} selectedPoint={selectedPoint} mapSize={mapSize}/>}
+            {<Map city={cityPoints[city]} points={points} selectedPoint={selectedPoint} mapSize={mapSize}/>}
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {<OfferList offersCount={offersCount} offers={offers} onListItemHover={handleListItemHover}/>}
+              {<OfferListComponent offersCount={offersCount} offers={cityOffers[city]} onListItemHover={handleListItemHover}/>}
             </div>
           </section>
         </div>

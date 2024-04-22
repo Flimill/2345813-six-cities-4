@@ -1,25 +1,31 @@
 import { useState } from 'react';
-import { City, MapSize, OfferCardData, Point, Points } from '../../types/types';
+import { MapSize, Point} from '../../types/types';
 import Map from '../map/map';
-import OfferList from '../offer-list/offer-list';
+import OfferListComponent from '../offer-list/offer-list-component';
+import CityListComponent from './city-list-component';
+import cityList from '../../mocks/city-list';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import { cityPoints } from '../../mocks/city-points';
+import cityOffers from '../../mocks/city-OFFERS';
 
 type MainProps = {
   offersCount: number;
-  offers: OfferCardData[];
-  city: City;
-  points: Points;
 
 };
 
-function MainPage({ offersCount, offers,city, points }: MainProps): JSX.Element {
-  const mapSize: MapSize = {
-    height: '750px',
-    width: '100%'
-  };
+const mapSize: MapSize = {
+  height: '750px',
+  width: '100%'
+};
 
-  const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(
-    undefined
-  );
+function MainPage({ offersCount}: MainProps): JSX.Element {
+
+  const city = useSelector((state: RootState) => state.city);
+  const [selectedPoint, setSelectedPoint] = useState<Point | undefined>();
+  const OFFERS = cityOffers[city];
+  const points = OFFERS.map((offer) => offer.point);
+
 
   const handleListItemHover = (listItemName: string) => {
     const currentPoint = points.find((point) => point.name === listItemName);
@@ -62,45 +68,14 @@ function MainPage({ offersCount, offers,city, points }: MainProps): JSX.Element 
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
+            {<CityListComponent cityList={cityList}/>}
           </section>
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
+              <b className="places__found">{cityOffers[city].length} places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -117,11 +92,11 @@ function MainPage({ offersCount, offers,city, points }: MainProps): JSX.Element 
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {<OfferList offersCount={offersCount} offers={offers} onListItemHover={handleListItemHover}/>}
+                {<OfferListComponent offersCount={offersCount} offers={OFFERS} onListItemHover={handleListItemHover}/>}
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map">{<Map city={city} points={points} selectedPoint={selectedPoint} mapSize={mapSize}/>}</section>
+              <section className="cities__map map">{<Map city={cityPoints[city]} points={points} selectedPoint={selectedPoint} mapSize={mapSize}/>}</section>
             </div>
           </div>
         </div>

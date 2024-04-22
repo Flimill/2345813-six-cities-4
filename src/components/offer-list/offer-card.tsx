@@ -7,10 +7,8 @@ type OfferCardProps = {
 };
 
 function OfferCard({ offer,handleListItemHover }: OfferCardProps): JSX.Element {
-  let mark: JSX.Element | null = null;
-  if (offer.mark) {
-    mark = <div className="place-card__mark"><span>Premium</span></div>;
-  }
+
+  const mark: JSX.Element = <div>{offer.mark && <div className="place-card__mark" ><span>Premium</span></div>}</div>;
   const [isBookmarkActive, setIsBookmarkActive] = useState(true);
 
   const toggleBookmark = () => {

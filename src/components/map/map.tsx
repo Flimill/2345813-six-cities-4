@@ -25,13 +25,21 @@ const currentCustomIcon = new Icon({
 });
 
 function Map(props: MapProps): JSX.Element {
-  const {city, points, selectedPoint,mapSize} = props;
+  const {city, points, selectedPoint, mapSize} = props;
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
   useEffect(() => {
     if (map) {
+      // Удаляем предыдущие маркеры
+      map.eachLayer((layer) => {
+        if (layer instanceof Marker) {
+          map.removeLayer(layer);
+        }
+      });
+
+      // Добавляем новые маркеры
       const markerLayer = layerGroup().addTo(map);
       points.forEach((point) => {
         const marker = new Marker({
@@ -48,11 +56,10 @@ function Map(props: MapProps): JSX.Element {
           .addTo(markerLayer);
       });
 
-      return () => {
-        map.removeLayer(markerLayer);
-      };
+      // Обновляем центр карты и уровень масштабирования
+      map.setView([city.lat, city.lng], city.zoom);
     }
-  }, [map, points, selectedPoint]);
+  }, [map, city, points, selectedPoint]);
 
   return <div style={mapSize} ref={mapRef}></div>;
 }

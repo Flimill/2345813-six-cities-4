@@ -2,14 +2,13 @@ import { OfferCardData } from '../../types/types';
 import OfferCard from './offer-card';
 import {MouseEvent} from 'react';
 
-type OfferListProps = {
+type OfferListComponentProps = {
   offersCount: number;
   offers: OfferCardData[];
   onListItemHover: (listItemName: string) => void;
 };
 
-function OfferList({ offersCount, offers,onListItemHover }: OfferListProps): JSX.Element {
-  const offerComponents: JSX.Element[] = [];
+function OfferListComponent({ offersCount, offers,onListItemHover }: OfferListComponentProps): JSX.Element {
 
   const handleListItemHover = (event: MouseEvent<HTMLLIElement>) => {
     event.preventDefault();
@@ -22,11 +21,14 @@ function OfferList({ offersCount, offers,onListItemHover }: OfferListProps): JSX
       }
     }
   };
-  for (let i = 0; i < offersCount && i < offers.length; i++) {
-    offerComponents.push(<OfferCard key={i} offer={offers[i]} handleListItemHover={handleListItemHover}/>);
-  }
   //eslint-disable-next-line
-  return <>{offerComponents}</>;
+  return (
+    <>
+      {offers.slice(0, offersCount).map((offer) => (
+        <OfferCard key={offer.id} offer={offer} handleListItemHover={handleListItemHover} />
+      ))}
+    </>
+  );
 }
 
-export default OfferList;
+export default OfferListComponent;

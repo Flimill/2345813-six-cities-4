@@ -2,11 +2,13 @@ export type OfferCardData ={
     name: string;
     type: string;
     id: number;
+    city: string;
     price: number;
     rating: number;
     mark:boolean;
     features: string[];
     imageUrl: string;
+    point: Point;
   }
 
 export type City = {
@@ -16,8 +18,14 @@ export type City = {
     zoom: number;
   };
 
+export type CityPoints = {[city:string]:City};
+
+export type OffersByCity = {
+  [city: string]: OfferCardData[];
+}
+
 export type Point = {
-    name: string;
+    name:string;
     lat: number;
     lng: number;
   };
