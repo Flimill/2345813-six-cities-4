@@ -7,7 +7,7 @@ import cityList from '../../mocks/city-list';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { cityPoints } from '../../mocks/city-points';
-import cityOffers from '../../mocks/city-OFFERS';
+import cityOffers from '../../mocks/city-offers';
 import SortingOptions from './sorting-options';
 
 type MainProps = {
@@ -22,12 +22,12 @@ const mapSize: MapSize = {
 
 function MainPage({ offersCount}: MainProps): JSX.Element {
 
-  const city = useSelector((state: RootState) => state.city);
+  const city:string = useSelector((state: RootState) => state.city);
   const [selectedPoint, setSelectedPoint] = useState<Point | undefined>();
-  const offers = cityOffers[city];
+  const offers: OfferCardData[] = cityOffers[city];
   const points: Points = offers.map((offer) => offer.point);
 
-  const [sortedOffers, setSortedOffers] = useState([...offers]);
+  const [sortedOffers, setSortedOffers] = useState<OfferCardData[]>([...offers]);
 
   useEffect(() => {
     setSortedOffers([...offers]);
@@ -86,7 +86,7 @@ function MainPage({ offersCount}: MainProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{cityOffers[city].length} places to stay in {city}</b>
+              <b className="places__found">{offers.length} places to stay in {city}</b>
               {<SortingOptions offerList={offers} onSort={handleSort}/>}
               <div className="cities__places-list places__list tabs__content">
                 {<OfferListComponent offersCount={offersCount} offers={sortedOffers} onListItemHover={handleListItemHover}/>}

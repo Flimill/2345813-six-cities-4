@@ -2,14 +2,14 @@ import { REVIEWS } from '../../mocks/reviews';
 import ReviewSection from './review-section';
 import Map from '../map/map';
 import { useState } from 'react';
-import { MapSize, Point, Points} from '../../types/types';
+import { MapSize, OfferCardData, Point, Points} from '../../types/types';
 import OfferListComponent from '../offer-list/offer-list-component';
 
 import { useParams } from 'react-router-dom';
 import OFFERS from '../../mocks/offers';
 import { cityPoints } from '../../mocks/city-points';
 import cityList from '../../mocks/city-list';
-import cityOffers from '../../mocks/city-OFFERS';
+import cityOffers from '../../mocks/city-offers';
 
 const mapSize: MapSize = {
   height: '100%',
@@ -27,7 +27,7 @@ function OfferPage(): JSX.Element {
     city = foundOffer.city;
   }
   const offersCount = 3;
-  const offers = cityOffers[city].slice(0, offersCount);
+  const offers: OfferCardData[] = cityOffers[city].slice(0, offersCount);
   const points: Points = offers.map((offer) => offer.point);
 
   const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(
@@ -200,7 +200,7 @@ function OfferPage(): JSX.Element {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {<OfferListComponent offersCount={offersCount} offers={cityOffers[city]} onListItemHover={handleListItemHover}/>}
+              {<OfferListComponent offersCount={offersCount} offers={offers} onListItemHover={handleListItemHover}/>}
             </div>
           </section>
         </div>

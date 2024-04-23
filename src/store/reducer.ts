@@ -1,6 +1,6 @@
 import {createReducer} from '@reduxjs/toolkit';
 import { updateCity,updateOfferList } from './action';
-import cityOFFERS from '../mocks/city-OFFERS';
+import cityOFFERS from '../mocks/city-offers';
 import { START_CITY } from '../const';
 
 
