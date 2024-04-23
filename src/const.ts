@@ -6,4 +6,4 @@ export const URL_MARKER_DEFAULT =
 export const URL_MARKER_CURRENT =
 `${SOURCE_URL}/main-pin.svg`;
 
-export const START_CITY = 'Paris';
+export const START_CITY = 'Amsterdam';

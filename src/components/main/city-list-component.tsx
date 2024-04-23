@@ -1,11 +1,14 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateCity, updateOfferList } from '../../store/action';
+import { RootState } from '../../store';
 
 type CityListProps = {
   cityList: string[];
 };
 
 function CityListComponent({ cityList }: CityListProps): JSX.Element {
+  const selectedCity = useSelector((state: RootState) => state.city);
+
   const dispatch = useDispatch();
 
   const handleCityClick = (city: string) => {
@@ -18,7 +21,7 @@ function CityListComponent({ cityList }: CityListProps): JSX.Element {
       {cityList.map((city) => (
         <li key={city} className="locations__item">
           <a
-            className="locations__item-link tabs__item"
+            className={`locations__item-link tabs__item${(city === selectedCity) ? ' tabs__item--active' : ''}`}
             href="#"
             onClick={(e) => {
               e.preventDefault();

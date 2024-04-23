@@ -2,7 +2,7 @@ import { REVIEWS } from '../../mocks/reviews';
 import ReviewSection from './review-section';
 import Map from '../map/map';
 import { useState } from 'react';
-import { MapSize, Point} from '../../types/types';
+import { MapSize, Point, Points} from '../../types/types';
 import OfferListComponent from '../offer-list/offer-list-component';
 
 import { useParams } from 'react-router-dom';
@@ -28,7 +28,7 @@ function OfferPage(): JSX.Element {
   }
   const offersCount = 3;
   const offers = cityOffers[city].slice(0, offersCount);
-  const points = offers.map((offer) => offer.point);
+  const points: Points = offers.map((offer) => offer.point);
 
   const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(
     undefined

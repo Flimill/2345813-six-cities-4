@@ -5,6 +5,7 @@ export type OfferCardData ={
     city: string;
     price: number;
     rating: number;
+    popularity: number;
     mark:boolean;
     features: string[];
     imageUrl: string;
