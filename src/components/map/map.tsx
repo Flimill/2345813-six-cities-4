@@ -32,14 +32,14 @@ function Map(props: MapProps): JSX.Element {
 
   useEffect(() => {
     if (map) {
-      // Удаляем предыдущие маркеры
+
       map.eachLayer((layer) => {
         if (layer instanceof Marker) {
           map.removeLayer(layer);
         }
       });
 
-      // Добавляем новые маркеры
+
       const markerLayer = layerGroup().addTo(map);
       points.forEach((point) => {
         const marker = new Marker({
@@ -56,7 +56,6 @@ function Map(props: MapProps): JSX.Element {
           .addTo(markerLayer);
       });
 
-      // Обновляем центр карты и уровень масштабирования
       map.setView([city.lat, city.lng], city.zoom);
     }
   }, [map, city, points, selectedPoint]);

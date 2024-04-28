@@ -8,21 +8,26 @@ type SortingOptionsProps = {
 
 const placesOptionName = ['Popular','Price: low to high','Price: high to low','Top rated first'];
 
+function getSortedList(offerList: OfferCardData[], selectedItem: string){
+  const sortedItems: OfferCardData[] = [...offerList];
+  if(selectedItem === 'Popular'){
+    sortedItems.sort((a, b) => b.popularity - a.popularity);
+  } else if(selectedItem === 'Price: low to high'){
+    sortedItems.sort((a, b) => a.price - b.price);
+  } else if(selectedItem === 'Price: high to low'){
+    sortedItems.sort((a, b) => b.price - a.price);
+  } else { //Top rated first
+    sortedItems.sort((a, b) => b.rating - a.rating);
+  }
+  return sortedItems;
+}
+
 function SortingOptions({offerList, onSort}:SortingOptionsProps): JSX.Element{
   const [selectedItem, setSelectedItem] = useState('Popular');
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    const sortedItems: OfferCardData[] = [...offerList];
-    if(selectedItem === 'Popular'){
-      sortedItems.sort((a, b) => b.popularity - a.popularity);
-    } else if(selectedItem === 'Price: low to high'){
-      sortedItems.sort((a, b) => a.price - b.price);
-    } else if(selectedItem === 'Price: high to low'){
-      sortedItems.sort((a, b) => b.price - a.price);
-    } else { //Top rated first
-      sortedItems.sort((a, b) => b.rating - a.rating);
-    }
+    const sortedItems = getSortedList(offerList, selectedItem);
     onSort(sortedItems);
   }, [selectedItem, offerList, onSort]);
 
@@ -31,7 +36,7 @@ function SortingOptions({offerList, onSort}:SortingOptionsProps): JSX.Element{
   };
 
   const toggleOpen = () => {
-    setIsOpen(!isOpen); // Переключаем состояние открытости/закрытости
+    setIsOpen(!isOpen); 
   };
 
   return(
