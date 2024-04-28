@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { OfferCardData } from '../../types/types';
 
 type SortingOptionsProps = {
-    offerList: OfferCardData[];
-    onSort: (sortedList: OfferCardData[]) => void;
+  offerList: OfferCardData[];
+  onSort: (sortedList: OfferCardData[]) => void;
 }
 
 const placesOptionName = ['Popular','Price: low to high','Price: high to low','Top rated first'];
@@ -36,7 +36,7 @@ function SortingOptions({offerList, onSort}:SortingOptionsProps): JSX.Element{
   };
 
   const toggleOpen = () => {
-    setIsOpen(!isOpen); 
+    setIsOpen(!isOpen);
   };
 
   return(
