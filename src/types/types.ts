@@ -1,23 +1,42 @@
-export type OfferCardData ={
+/*export type OfferCardData ={
     name: string;
     type: string;
-    id: number;
+    id: string;
     city: string;
     price: number;
     rating: number;
     popularity: number;
-    mark:boolean;
     features: string[];
     imageUrl: string;
     point: Point;
+    isFavorite: boolean;
+    isPremium: boolean;
+  }*/
+  export type Location = {
+    latitude: number
+    longitude: number
+    zoom: number
   }
 
+  
 export type City = {
-    title: string;
-    lat: number;
-    lng: number;
-    zoom: number;
-  };
+  name: string;
+  location: Location;
+};
+
+export type OfferCardData =  {
+  id: string
+  title: string
+  type: string
+  price: number
+  city: City
+  location: Location,
+  isFavorite: boolean
+  isPremium: boolean
+  rating: number
+  previewImage: string
+};
+
 
 export type CityPoints = {[city:string]:City};
 
@@ -27,8 +46,7 @@ export type OffersByCity = {
 
 export type Point = {
     name:string;
-    lat: number;
-    lng: number;
+    location: Location;
   };
 
 export type Points = Point[];

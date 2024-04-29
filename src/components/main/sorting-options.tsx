@@ -10,15 +10,13 @@ const placesOptionName = ['Popular','Price: low to high','Price: high to low','T
 
 function getSortedList(offerList: OfferCardData[], selectedItem: string){
   const sortedItems: OfferCardData[] = [...offerList];
-  if(selectedItem === 'Popular'){
-    sortedItems.sort((a, b) => b.popularity - a.popularity);
-  } else if(selectedItem === 'Price: low to high'){
+   if(selectedItem === 'Price: low to high'){
     sortedItems.sort((a, b) => a.price - b.price);
   } else if(selectedItem === 'Price: high to low'){
     sortedItems.sort((a, b) => b.price - a.price);
-  } else { //Top rated first
+  } else if(selectedItem === 'Top rated first'){
     sortedItems.sort((a, b) => b.rating - a.rating);
-  }
+  } //else (selectedItem === 'Popular')
   return sortedItems;
 }
 
@@ -29,7 +27,7 @@ function SortingOptions({offerList, onSort}:SortingOptionsProps): JSX.Element{
   useEffect(() => {
     const sortedItems = getSortedList(offerList, selectedItem);
     onSort(sortedItems);
-  }, [selectedItem, offerList, onSort]);
+  }, [selectedItem, offerList]);
 
   const handleItemSelect = (item:string) => {
     setSelectedItem(item);

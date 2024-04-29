@@ -2,7 +2,7 @@ import { REVIEWS } from '../../mocks/reviews';
 import ReviewSection from './review-section';
 import Map from '../map/map';
 import { useState } from 'react';
-import { MapSize, OfferCardData, Point, Points} from '../../types/types';
+import { MapSize, OfferCardData, Point} from '../../types/types';
 import OfferListComponent from '../offer-list/offer-list-component';
 
 import { useParams } from 'react-router-dom';
@@ -18,17 +18,20 @@ const mapSize: MapSize = {
 
 function OfferPage(): JSX.Element {
   const { id } = useParams();
-  const foundOffer = OFFERS.find((offer) => offer.id === Number(id));
+  const foundOffer = OFFERS.find((offer) => offer.id === id);
 
   const reviewsCount = 1;
   const reviews = REVIEWS;
   let city:string = cityList[0];
   if (foundOffer){
-    city = foundOffer.city;
+    city = foundOffer.city.name;
   }
   const offersCount = 3;
   const offers: OfferCardData[] = cityOffers[city].slice(0, offersCount);
-  const points: Points = offers.map((offer) => offer.point);
+  const points: Point[] = offers.map((offer) => ({
+    name: offer.title,
+    location: offer.location
+  }));
 
   const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(
     undefined

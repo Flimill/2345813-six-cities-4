@@ -8,20 +8,20 @@ type OfferCardProps = {
 
 function OfferCard({ offer,handleListItemHover }: OfferCardProps): JSX.Element {
 
-  const mark: JSX.Element = <div>{offer.mark && <div className="place-card__mark" ><span>Premium</span></div>}</div>;
+  const mark: JSX.Element = <div>{offer.isPremium && <div className="place-card__mark" ><span>Premium</span></div>}</div>;
   const [isBookmarkActive, setIsBookmarkActive] = useState(true);
 
   const toggleBookmark = () => {
     setIsBookmarkActive((prevState) => !prevState);
   };
-  const ratingWidth = `${(offer.rating / 5) * 100 }%`;
+  const ratingWidth = `${(Math.round(offer.rating) / 5) * 100 }%`;
   const offerLink = `/offer/${offer.id}`;
   return (
     <article className="cities__card place-card" onMouseEnter={handleListItemHover}>
       {mark}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href={offerLink}>
-          <img className="place-card__image" src={offer.imageUrl} width="260" height="200" alt={offer.name} />
+          <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt={offer.title} />
         </a>
       </div>
       <div className="place-card__info">
@@ -48,7 +48,7 @@ function OfferCard({ offer,handleListItemHover }: OfferCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href={offerLink}>{offer.name}</a>
+          <a href={offerLink}>{offer.title}</a>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>

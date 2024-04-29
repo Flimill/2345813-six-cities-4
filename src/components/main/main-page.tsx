@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import { MapSize, OfferCardData, Point, Points} from '../../types/types';
+import { MapSize, OfferCardData, Point} from '../../types/types';
 import Map from '../map/map';
 import OfferListComponent from '../offer-list/offer-list-component';
 import CityListComponent from './city-list-component';
 import cityList from '../../mocks/city-list';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import { cityPoints } from '../../mocks/city-points';
-import cityOffers from '../../mocks/city-offers';
 import SortingOptions from './sorting-options';
+import {getPointByCity } from '../../utils/offers-util';
+import OFFERS from '../../mocks/offers';
 
 type MainProps = {
   offersCount: number;
@@ -24,14 +24,18 @@ function MainPage({ offersCount}: MainProps): JSX.Element {
 
   const city:string = useSelector((state: RootState) => state.city);
   const [selectedPoint, setSelectedPoint] = useState<Point | undefined>();
-  const offers: OfferCardData[] = cityOffers[city];
-  const points: Points = offers.map((offer) => offer.point);
+  const offers: OfferCardData[] = useSelector((state: RootState) => state.offerList);
+  const points: Point[] = offers.map((offer) => ({
+    name: offer.title,
+    location: offer.location
+  }));
 
   const [sortedOffers, setSortedOffers] = useState<OfferCardData[]>([...offers]);
 
   useEffect(() => {
+    setSelectedPoint(undefined);
     setSortedOffers([...offers]);
-  }, [city,offers]);
+  }, [city]);
 
   const handleSort = (sortedList: OfferCardData[]) => {
     setSortedOffers(sortedList);
@@ -86,14 +90,14 @@ function MainPage({ offersCount}: MainProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers.length} places to stay in {city}</b>
+              <b className="places__found">{offers.length} place{offers.length==1 ? '': 's'} to stay in {city}</b>
               {<SortingOptions offerList={offers} onSort={handleSort}/>}
               <div className="cities__places-list places__list tabs__content">
                 {<OfferListComponent offersCount={offersCount} offers={sortedOffers} onListItemHover={handleListItemHover}/>}
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map">{<Map city={cityPoints[city]} points={points} selectedPoint={selectedPoint} mapSize={mapSize}/>}</section>
+              <section className="cities__map map">{<Map city={getPointByCity(city, OFFERS)} points={points} selectedPoint={selectedPoint} mapSize={mapSize}/>}</section>
             </div>
           </div>
         </div>

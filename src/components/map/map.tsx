@@ -43,8 +43,8 @@ function Map(props: MapProps): JSX.Element {
       const markerLayer = layerGroup().addTo(map);
       points.forEach((point) => {
         const marker = new Marker({
-          lat: point.lat,
-          lng: point.lng
+          lat: point.location.latitude,
+          lng: point.location.longitude
         });
 
         marker
@@ -55,8 +55,12 @@ function Map(props: MapProps): JSX.Element {
           )
           .addTo(markerLayer);
       });
-
-      map.setView([city.lat, city.lng], city.zoom);
+      if (selectedPoint !== undefined){
+        map.setView([selectedPoint.location.latitude, selectedPoint.location.longitude],  selectedPoint.location.zoom);
+      } else{
+        map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
+      }
+      
     }
   }, [map, city, points, selectedPoint]);
 
