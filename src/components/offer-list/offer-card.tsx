@@ -1,15 +1,22 @@
+import { useDispatch } from 'react-redux';
 import { OfferCardData } from '../../types/types';
-import {MouseEvent, useState} from 'react';
+import {useState} from 'react';
+import { changeSelectedPoint } from '../../store/action';
 
 type OfferCardProps = {
   offer: OfferCardData;
-  handleListItemHover: (event: MouseEvent<HTMLLIElement>) => void;
 };
 
-function OfferCard({ offer,handleListItemHover }: OfferCardProps): JSX.Element {
+function OfferCard({ offer }: OfferCardProps): JSX.Element {
+  const dispatch = useDispatch();
 
   const mark: JSX.Element = <div>{offer.isPremium && <div className="place-card__mark" ><span>Premium</span></div>}</div>;
-  const [isBookmarkActive, setIsBookmarkActive] = useState(true);
+
+  const [isBookmarkActive, setIsBookmarkActive] = useState(offer.isFavorite);
+  const point = {
+    location: offer.location,
+    name: offer.title
+  };
 
   const toggleBookmark = () => {
     setIsBookmarkActive((prevState) => !prevState);
@@ -17,7 +24,7 @@ function OfferCard({ offer,handleListItemHover }: OfferCardProps): JSX.Element {
   const ratingWidth = `${(Math.round(offer.rating) / 5) * 100 }%`;
   const offerLink = `/offer/${offer.id}`;
   return (
-    <article className="cities__card place-card" onMouseEnter={handleListItemHover}>
+    <article className="cities__card place-card" onMouseEnter={()=>dispatch(changeSelectedPoint(point))}>
       {mark}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href={offerLink}>

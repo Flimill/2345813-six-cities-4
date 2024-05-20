@@ -1,13 +1,10 @@
-import { OfferCardData } from '../../types/types';
+import { useSelector } from 'react-redux';
 import FavoriteList from './favorite-list';
+import { RootState } from '../../store';
+import { OfferCardData } from '../../types/types';
 
-type FavoritesProps = {
-  favoritesCount: number;
-  favorites: OfferCardData[];
-};
-
-
-function FavoritesPage({ favoritesCount, favorites }: FavoritesProps): JSX.Element {
+function FavoritesPage(): JSX.Element {
+  const favorites = useSelector((state: RootState) => state.offerList).filter((offer:OfferCardData)=>offer.isFavorite);
   return (
     <main className="page__main page__main--favorites">
       <div className="page__favorites-container container">
@@ -23,7 +20,7 @@ function FavoritesPage({ favoritesCount, favorites }: FavoritesProps): JSX.Eleme
                 </div>
               </div>
               <div className="favorites__places">
-                {<FavoriteList favoritesCount={favoritesCount} favorites={favorites} />}
+                {<FavoriteList favorites={favorites} />}
               </div>
             </li>
           </ul>

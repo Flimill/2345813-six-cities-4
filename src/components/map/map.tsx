@@ -1,14 +1,15 @@
 import {useRef, useEffect} from 'react';
 import {Icon, Marker, layerGroup} from 'leaflet';
 import useMap from '../../hooks/use-map';
-import {City, Points, Point, MapSize} from '../../types/types';
+import {City, Location, MapSize} from '../../types/types';
 import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const';
 import 'leaflet/dist/leaflet.css';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 
 type MapProps = {
   city: City;
-  points: Points;
-  selectedPoint: Point | undefined;
+  points: Location[];
   mapSize: MapSize;
 };
 
@@ -25,7 +26,8 @@ const currentCustomIcon = new Icon({
 });
 
 function Map(props: MapProps): JSX.Element {
-  const {city, points, selectedPoint, mapSize} = props;
+  const {city, points, mapSize} = props;
+  const selectedPoint = useSelector((state: RootState) => state.selectedPoint);
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
@@ -43,24 +45,24 @@ function Map(props: MapProps): JSX.Element {
       const markerLayer = layerGroup().addTo(map);
       points.forEach((point) => {
         const marker = new Marker({
-          lat: point.location.latitude,
-          lng: point.location.longitude
+          lat: point.latitude,
+          lng: point.longitude
         });
 
         marker
           .setIcon(
-            selectedPoint !== undefined && point.name === selectedPoint.name
+            selectedPoint !== undefined && point === selectedPoint.location
               ? currentCustomIcon
               : defaultCustomIcon
           )
           .addTo(markerLayer);
       });
       if (selectedPoint !== undefined){
-        map.setView([selectedPoint.location.latitude, selectedPoint.location.longitude],  selectedPoint.location.zoom);
+        map.setView([selectedPoint.location.latitude, selectedPoint.location.longitude], selectedPoint.location.zoom);
       } else{
         map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
       }
-      
+
     }
   }, [map, city, points, selectedPoint]);
 

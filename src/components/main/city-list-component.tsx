@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { updateCity, updateOfferList } from '../../store/action';
+import { updateCity } from '../../store/action';
 import { RootState } from '../../store';
 
 type CityListProps = {
@@ -13,7 +13,6 @@ function CityListComponent({ cityList }: CityListProps): JSX.Element {
 
   const handleCityClick = (city: string) => {
     dispatch(updateCity(city));
-    dispatch(updateOfferList(city));
   };
 
   return (

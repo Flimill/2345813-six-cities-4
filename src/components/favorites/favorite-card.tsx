@@ -5,8 +5,9 @@ type FavoriteCardProps = {
 };
 
 function FavoriteCard({ favorite }: FavoriteCardProps): JSX.Element {
-  const mark: JSX.Element = <div>{favorite.mark && <div className="place-card__mark" ><span>Premium</span></div>}</div>;
-  const ratingWidth = `${(favorite.rating / 5) * 100 }%`;
+  const mark: JSX.Element = <div>{favorite.isPremium && <div className="place-card__mark" ><span>Premium</span></div>}</div>;
+
+  const ratingWidth = `${(Math.round(favorite.rating) / 5) * 100 }%`;
   const offerLink = `/offer/${favorite.id}`;
   return (
 
@@ -14,7 +15,7 @@ function FavoriteCard({ favorite }: FavoriteCardProps): JSX.Element {
       {mark}
       <div className="favorites__image-wrapper place-card__image-wrapper">
         <a href={offerLink}>
-          <img className="place-card__image" src={favorite.imageUrl} width="150" height="110" alt={favorite.name}/>
+          <img className="place-card__image" src={favorite.previewImage} width="150" height="110" alt={favorite.title}/>
         </a>
       </div>
       <div className="favorites__card-info place-card__info">
@@ -37,7 +38,7 @@ function FavoriteCard({ favorite }: FavoriteCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href={offerLink}>{favorite.name}</a>
+          <a href={offerLink}>{favorite.title}</a>
         </h2>
         <p className="place-card__type">{favorite.type}</p>
       </div>

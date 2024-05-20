@@ -1,34 +1,31 @@
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 import { OfferCardData } from '../../types/types';
+import { getSortedList } from '../../utils/offers-util';
 import OfferCard from './offer-card';
-import {MouseEvent} from 'react';
 
 type OfferListComponentProps = {
-  offersCount: number;
   offers: OfferCardData[];
-  onListItemHover: (listItemName: string) => void;
 };
 
-function OfferListComponent({ offersCount, offers,onListItemHover }: OfferListComponentProps): JSX.Element {
+function OfferListComponent({ offers }: OfferListComponentProps): JSX.Element {
+  const { isLoading, sortingOption } = useSelector((state: RootState) => ({
+    isLoading: state.isLoading,
+    sortingOption: state.sortingOption,
+  }));
 
-  const handleListItemHover = (event: MouseEvent<HTMLLIElement>) => {
-    event.preventDefault();
-    const placeCardElement = event.currentTarget;
-    const placeCardNameElement = placeCardElement.querySelector('.place-card__info .place-card__name a');
-    if (placeCardNameElement !== null) {
-      const placeCardName = placeCardNameElement.textContent;
-      if (placeCardName !== null) {
-        onListItemHover(placeCardName);
-      }
-    }
-  };
-  //eslint-disable-next-line
-  return (
-    <>
-      {offers.slice(0, offersCount).map((offer) => (
-        <OfferCard key={offer.id} offer={offer} handleListItemHover={handleListItemHover} />
-      ))}
-    </>
-  );
+  if (isLoading) {
+    return <span className="uploading">Uploading offers. Please wait.</span>;
+  } else {
+    const sortedOffers = getSortedList(offers, sortingOption);
+    return (
+      <>
+        {sortedOffers.map((offer) => (
+          <OfferCard key={offer.id} offer={offer} />
+        ))}
+      </>
+    );
+  }
 }
 
 export default OfferListComponent;
