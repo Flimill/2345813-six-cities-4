@@ -3,7 +3,7 @@ import { RootState,AppDispatch } from './';
 import { AxiosInstance } from 'axios';
 import { loadOffers, setError, setLoadingStatus, setReviews, setSelectedOffer } from './action';
 import { FullOfferCardData, OfferCardData, Reviews } from '../types/types';
-import { APIRoute, TIMEOUT_SHOW_ERROR } from '../const';
+import { APIRoute, TIMEOUT_SHOW_ERROR } from '../const/const';
 
 import {store} from './';
 

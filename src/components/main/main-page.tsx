@@ -3,7 +3,7 @@ import { MapSize, OfferCardData} from '../../types/types';
 import Map from '../map/map';
 import OfferListComponent from '../offer-list/offer-list-component';
 import CityListComponent from './city-list-component';
-import cityList from '../../mocks/city-list';
+import cityList from '../../const/city-list';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, store } from '../../store';
 import SortingOptions from './sorting-options';

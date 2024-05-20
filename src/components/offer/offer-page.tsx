@@ -4,12 +4,12 @@ import { MapSize} from '../../types/types';
 import OfferListComponent from '../offer-list/offer-list-component';
 
 import { useParams } from 'react-router-dom';
-import { cityPoints } from '../../mocks/city-points';
+import { cityPoints } from '../../const/city-points';
 import { RootState, store } from '../../store';
 import { fetchNearbyOffersAction, fetchReviewsList, fetchSelectedOffer } from '../../store/api-actions';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { START_CITY } from '../../const';
+import { START_CITY } from '../../const/const';
 import ImageList from './image-list';
 
 const mapSize: MapSize = {

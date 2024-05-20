@@ -2,7 +2,7 @@ import {useRef, useEffect} from 'react';
 import {Icon, Marker, layerGroup} from 'leaflet';
 import useMap from '../../hooks/use-map';
 import {City, Location, MapSize} from '../../types/types';
-import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const';
+import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const/const';
 import 'leaflet/dist/leaflet.css';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';

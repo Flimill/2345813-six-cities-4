@@ -1,4 +1,4 @@
-import { cityPoints } from '../mocks/city-points';
+import { cityPoints } from '../const/city-points';
 import { City, OfferCardData } from '../types/types';
 
 export function getOfferListByCity(city:string, offerList:OfferCardData[]): OfferCardData[] {

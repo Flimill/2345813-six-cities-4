@@ -1,6 +1,6 @@
 import {createReducer} from '@reduxjs/toolkit';
 import { changeSelectedPoint, changeSortingOption, loadOffers, setError, setLoadingStatus, setReviews, setSelectedOffer, updateCity } from './action';
-import { START_CITY, START_SORTING_OPTION } from '../const';
+import { START_CITY, START_SORTING_OPTION } from '../const/const';
 import { FullOfferCardData, OfferCardData, Point, Reviews } from '../types/types';
 
 type StateType = {
