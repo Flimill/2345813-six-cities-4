@@ -6,11 +6,12 @@ import OfferListComponent from '../offer-list/offer-list-component';
 import { useParams } from 'react-router-dom';
 import { cityPoints } from '../../const/city-points';
 import { RootState, store } from '../../store';
-import { fetchNearbyOffersAction, fetchReviewsList, fetchSelectedOffer } from '../../store/api-actions';
+import {fetchNearbyOffersAction, fetchReviewsList, fetchSelectedOffer, updateFavoriteStatus } from '../../store/api-actions';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { START_CITY } from '../../const/const';
 import ImageList from './image-list';
+import HeaderComponent from '../header/header-component';
 
 const mapSize: MapSize = {
   height: '100%',
@@ -26,6 +27,7 @@ function OfferPage(): JSX.Element {
     selectedOffer: state.selectedOffer
   }));
 
+
   useEffect(() => {
     if (id) {
       store.dispatch(fetchSelectedOffer(id));
@@ -33,6 +35,10 @@ function OfferPage(): JSX.Element {
       store.dispatch(fetchReviewsList(id));
     }
   }, [id]);
+  if (isLoading || !selectedOffer) {
+    return <span>Uploading offer. Please wait.</span>;
+  }
+
   let offersCity:string = START_CITY;
   if (selectedOffer) {
     offersCity = selectedOffer.city.name;
@@ -41,38 +47,18 @@ function OfferPage(): JSX.Element {
 
   const points = offers.map((offer) => (offer.location));
 
-  if (isLoading || !selectedOffer) {
-    return <span>Uploading offer. Please wait.</span>;
-  }
+
   const ratingWidth = `${(Math.round(selectedOffer.rating) / 5) * 100 }%`;
+  const premiumMark = <div className="offer__mark"><span>Premium</span></div>;
+
+  const toggleBookmark = () => {
+    store.dispatch(updateFavoriteStatus({offerId: selectedOffer.id , status: (!selectedOffer.isFavorite) ? 1 : 0}));
+  };
   return (
     <div className="page">
       <header className="header">
         <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <a className="header__logo-link" href="main.html">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-              </a>
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
+          <HeaderComponent/>
         </div>
       </header>
 
@@ -83,14 +69,14 @@ function OfferPage(): JSX.Element {
           </div>
           <div className="offer__container container">
             <div className="offer__wrapper">
-              <div className="offer__mark">
-                <span>{(selectedOffer.isPremium) ? 'Premium' : ''}</span>
-              </div>
+              {(selectedOffer.isPremium) ? premiumMark : ''}
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
                   {selectedOffer.title}
                 </h1>
-                <button className="offer__bookmark-button button" type="button">
+                <button className={`offer__bookmark-button button ${(selectedOffer.isFavorite) ? 'offer__bookmark-button--active' : ''}`}
+                  type="button" onClick={toggleBookmark}
+                >
                   <svg className="offer__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>

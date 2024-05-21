@@ -1,17 +1,22 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { updateCity } from '../../store/action';
 import { RootState } from '../../store';
+import { getSelectedCity, saveSelectedCity } from '../../utils/city-storage';
 
 type CityListProps = {
   cityList: string[];
 };
 
 function CityListComponent({ cityList }: CityListProps): JSX.Element {
-  const selectedCity = useSelector((state: RootState) => state.city);
-
   const dispatch = useDispatch();
+  const selectedCity = useSelector((state: RootState) => state.city);
+  if(getSelectedCity() !== selectedCity){
+    dispatch(updateCity(getSelectedCity()));
+  }
+
 
   const handleCityClick = (city: string) => {
+    saveSelectedCity(city);
     dispatch(updateCity(city));
   };
 

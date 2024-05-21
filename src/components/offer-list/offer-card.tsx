@@ -1,7 +1,9 @@
 import { useDispatch } from 'react-redux';
 import { OfferCardData } from '../../types/types';
-import {useState} from 'react';
+import { useEffect, useState } from 'react';
 import { changeSelectedPoint } from '../../store/action';
+import { store } from '../../store';
+import { fetchFavoriteOfferList, updateFavoriteStatus } from '../../store/api-actions';
 
 type OfferCardProps = {
   offer: OfferCardData;
@@ -9,22 +11,29 @@ type OfferCardProps = {
 
 function OfferCard({ offer }: OfferCardProps): JSX.Element {
   const dispatch = useDispatch();
-
   const mark: JSX.Element = <div>{offer.isPremium && <div className="place-card__mark" ><span>Premium</span></div>}</div>;
 
   const [isBookmarkActive, setIsBookmarkActive] = useState(offer.isFavorite);
+
   const point = {
     location: offer.location,
     name: offer.title
   };
 
+  useEffect(() => {
+    store.dispatch(fetchFavoriteOfferList());
+  }, [isBookmarkActive]);
+
   const toggleBookmark = () => {
-    setIsBookmarkActive((prevState) => !prevState);
+    setIsBookmarkActive(!isBookmarkActive);
+    store.dispatch(updateFavoriteStatus({ offerId: offer.id, status: !isBookmarkActive ? 1 : 0 }));
   };
+
   const ratingWidth = `${(Math.round(offer.rating) / 5) * 100 }%`;
   const offerLink = `/offer/${offer.id}`;
+
   return (
-    <article className="cities__card place-card" onMouseEnter={()=>dispatch(changeSelectedPoint(point))}>
+    <article className="cities__card place-card" onMouseEnter={() => dispatch(changeSelectedPoint(point))}>
       {mark}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href={offerLink}>

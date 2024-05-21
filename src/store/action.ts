@@ -1,10 +1,14 @@
 import {createAction} from '@reduxjs/toolkit';
-import { FullOfferCardData, OfferCardData, Point, Reviews } from '../types/types';
+import { FullOfferCardData, OfferCardData, Point, Reviews, UserData } from '../types/types';
 
 export const updateCity = createAction('createAction', (name:string) => ({
   payload: name,
 }));
 export const loadOffers = createAction('LOAD_OFFERS', (value: OfferCardData[]) => ({
+  payload: value
+}));
+
+export const setFavoriteOfferList = createAction('SET_FAVORITE_OFFER_LIST', (value: OfferCardData[]) => ({
   payload: value
 }));
 
@@ -27,4 +31,10 @@ export const setSelectedOffer = createAction('SET_SELECTED_OFFER', (offer: FullO
 }));
 export const setReviews = createAction('SET_REVIEWS', (reviews: Reviews) => ({
   payload: reviews
+}));
+export const setAuthorizationStatus = createAction('SET_AUTHORIZATION_STATUS', (authorizationStatus: boolean) => ({
+  payload: authorizationStatus
+}));
+export const setUserData = createAction('SET_USER_DATA', (userData: UserData|undefined) => ({
+  payload: userData
 }));

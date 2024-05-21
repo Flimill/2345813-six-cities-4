@@ -81,3 +81,21 @@ export type MapSize = {
   width: string;
 
 }
+
+export type UserData = {
+  name: string;
+  avatarUrl: string;
+  isPro: boolean;
+  email: string;
+  token: string;
+  }
+
+export type LoginData = {
+  email:string;
+  password:string;
+}
+
+export type updateFavoriteData = {
+  offerId:string;
+  status:number;
+}

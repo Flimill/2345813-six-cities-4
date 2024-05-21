@@ -5,22 +5,13 @@ import MainPage from '../main/main-page';
 import OfferPage from '../offer/offer-page';
 import Error404Page from '../error/error404-page';
 
-type AppProps = {
-  isAuthenticated: boolean;
-};
-
-function App({ isAuthenticated}: AppProps): JSX.Element {
+function App(): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        {isAuthenticated ? (
-          <Route path="/favorites" element={<FavoritesPage />} />
-        ) : (
-          <Route path="/favorites" element={<LoginPage />} />
-        )}
-
-        <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/favorites" element={<FavoritesPage />} />
+        <Route path="/" element={<MainPage />} />
         <Route path="/offer/:id" element={<OfferPage />} />
         <Route path="*" element={<Error404Page />} />
       </Routes>

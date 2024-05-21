@@ -12,7 +12,17 @@ export const START_SORTING_OPTION = 'Popular';
 
 export const TIMEOUT_SHOW_ERROR = 2000;
 
-export enum APIRoute {
+export enum InternalRoutes{
+  Login = '/login',
+  Main = '/',
+  Favorites = '/favorites',
+  Offer = '/offer/'
+}
+
+export enum APIRoutes {
   Offers = '/offers',
-  Reviews = '/comments'
+  Reviews = '/comments',
+  Login = '/login',
+  Favorite = '/favorite',
+  Logout = '/logout',
 }

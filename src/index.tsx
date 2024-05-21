@@ -4,6 +4,9 @@ import App from './components/app/app';
 
 import { store } from './store/index';
 import { Provider } from 'react-redux';
+import { checkAuth } from './store/api-actions';
+
+store.dispatch(checkAuth());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -12,10 +15,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <Provider store={store}>
     <React.StrictMode>
-      <App
-        isAuthenticated
-      />
+      <App />
     </React.StrictMode>
   </Provider>
 
 );
+
