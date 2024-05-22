@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { changeSelectedPoint } from '../../store/action';
 import { store } from '../../store';
 import { fetchFavoriteOfferList, updateFavoriteStatus } from '../../store/api-actions';
+import { Navigate } from 'react-router-dom';
+import { InternalRoutes } from '../../const/const';
 
 type OfferCardProps = {
   offer: OfferCardData;
@@ -30,6 +32,8 @@ function OfferCard({ isAuth,offer }: OfferCardProps): JSX.Element {
     setIsBookmarkActive(!isBookmarkActive);
     if(isAuth){
       store.dispatch(updateFavoriteStatus({ offerId: offer.id, status: !isBookmarkActive ? 1 : 0 }));
+    } else{
+      return <Navigate to={InternalRoutes.Login} />;
     }
   };
 

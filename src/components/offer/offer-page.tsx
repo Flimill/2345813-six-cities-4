@@ -19,12 +19,11 @@ const mapSize: MapSize = {
 
 function OfferPage(): JSX.Element {
   const { id } = useParams();
-  const { isLoading, offers, selectedOffer,error,sortingOption } = useSelector((state: RootState) => ({
+  const { isLoading, offers, selectedOffer,error } = useSelector((state: RootState) => ({
     isLoading: state.status.isLoading,
     offers: state.offer.offerList,
     selectedOffer: state.offer.selectedOffer,
     error: state.status.error,
-    sortingOption: state.mainPage.sortingOption
   }));
 
 
@@ -148,7 +147,7 @@ function OfferPage(): JSX.Element {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {<MemoizedOfferListComponent offers={offers} sortingOption={sortingOption}/>}
+              {<MemoizedOfferListComponent offers={offers} sortingOption={null}/>}
             </div>
           </section>
         </div>

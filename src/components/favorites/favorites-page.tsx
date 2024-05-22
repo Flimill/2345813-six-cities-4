@@ -7,6 +7,7 @@ import { InternalRoutes } from '../../const/const';
 import { OfferCardData } from '../../types/types';
 import { saveSelectedCity } from '../../utils/city-storage';
 import MemoizedFavoriteList from './favorite-list';
+import HeaderComponent from '../header/header-component';
 
 function FavoritesPage(): JSX.Element {
   const dispatch = useDispatch();
@@ -43,29 +44,45 @@ function FavoritesPage(): JSX.Element {
 
 
   return (
-    <main className="page__main page__main--favorites">
-      <div className="page__favorites-container container">
-        <section className="favorites">
-          <h1 className="favorites__title">Saved listing</h1>
-          <ul className="favorites__list">
-            {Object.keys(groupedFavorites).map((cityName) => (
-              <li key={cityName} className="favorites__locations-items">
-                <div className="favorites__locations locations locations--current">
-                  <div className="locations__item">
-                    <a className="locations__item-link" href={InternalRoutes.Main} onClick={()=>saveSelectedCity(cityName)}>
-                      <span>{cityName}</span>
-                    </a>
-                  </div>
-                </div>
-                <div className="favorites__places">
-                  <MemoizedFavoriteList favorites={groupedFavorites[cityName]} />
-                </div>
-              </li>
-            ))}
-          </ul>
-        </section>
-      </div>
-    </main>
+    <div className="page">
+      <header className="header">
+        <div className="container">
+          <HeaderComponent/>
+        </div>
+      </header>
+      <main className="page__main page__main--favorites">
+        <div className="page__favorites-container container">
+          {(favoriteOfferList.length === 0) ?
+            <section className="favorites favorites--empty">
+              <h1 className="visually-hidden">Favorites (empty)</h1>
+              <div className="favorites__status-wrapper">
+                <b className="favorites__status">Nothing yet saved.</b>
+                <p className="favorites__status-description">Save properties to narrow down search or plan your future trips.</p>
+              </div>
+            </section>
+            :
+            <section className="favorites">
+              <h1 className="favorites__title">Saved listing</h1>
+              <ul className="favorites__list">
+                {Object.keys(groupedFavorites).map((cityName) => (
+                  <li key={cityName} className="favorites__locations-items">
+                    <div className="favorites__locations locations locations--current">
+                      <div className="locations__item">
+                        <a className="locations__item-link" href={InternalRoutes.Main} onClick={()=>saveSelectedCity(cityName)}>
+                          <span>{cityName}</span>
+                        </a>
+                      </div>
+                    </div>
+                    <div className="favorites__places">
+                      <MemoizedFavoriteList favorites={groupedFavorites[cityName]} />
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </section>}
+        </div>
+      </main>
+    </div>
   );
 }
 
