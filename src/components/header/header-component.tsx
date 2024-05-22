@@ -1,13 +1,13 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import AuthorizedUserHeader from './authorized-user-header';
-import UnauthorizedUserHeader from './unauthorized-user-header';
 import { InternalRoutes } from '../../const/const';
+import MemoizedUnauthorizedUserHeader from './unauthorized-user-header';
 
 
 function HeaderComponent(): JSX.Element {
 
-  const authorizationStatus:boolean = useSelector((state: RootState) => state.authorizationStatus);
+  const authorizationStatus:boolean = useSelector((state: RootState) => state.user.authorizationStatus);
   return(
     <div className="header__wrapper">
       <div className="header__left">
@@ -17,7 +17,7 @@ function HeaderComponent(): JSX.Element {
       </div>
       <nav className="header__nav">
         <ul className="header__nav-list">
-          {(authorizationStatus) ? <AuthorizedUserHeader/> : <UnauthorizedUserHeader/>}
+          {(authorizationStatus) ? <AuthorizedUserHeader/> : <MemoizedUnauthorizedUserHeader/>}
         </ul>
       </nav>
     </div>

@@ -1,3 +1,5 @@
+import React from 'react';
+
 type ImageListProps = {
     images: string[];
   }
@@ -14,4 +16,6 @@ function ImageList({ images }: ImageListProps): JSX.Element {
   );
 }
 
-export default ImageList;
+const MemoizedImageList = React.memo(ImageList);
+
+export default MemoizedImageList;

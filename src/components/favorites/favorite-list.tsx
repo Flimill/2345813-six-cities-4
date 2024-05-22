@@ -1,3 +1,4 @@
+import React from 'react';
 import { OfferCardData } from '../../types/types';
 import FavoriteCard from './favorite-card';
 
@@ -6,8 +7,6 @@ type FavoriteListProps = {
 };
 
 function FavoriteList({ favorites }: FavoriteListProps): JSX.Element {
-
-
   return (
     <>
       {favorites.map((favorite) => (
@@ -17,4 +16,7 @@ function FavoriteList({ favorites }: FavoriteListProps): JSX.Element {
   );
 }
 
-export default FavoriteList;
+
+const MemoizedFavoriteList = React.memo(FavoriteList);
+
+export default MemoizedFavoriteList;

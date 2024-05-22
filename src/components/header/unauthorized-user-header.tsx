@@ -1,3 +1,4 @@
+import React from 'react';
 import { InternalRoutes } from '../../const/const';
 
 function UnauthorizedUserHeader(): JSX.Element {
@@ -12,4 +13,6 @@ function UnauthorizedUserHeader(): JSX.Element {
   );
 }
 
-export default UnauthorizedUserHeader;
+const MemoizedUnauthorizedUserHeader = React.memo(UnauthorizedUserHeader);
+
+export default MemoizedUnauthorizedUserHeader;

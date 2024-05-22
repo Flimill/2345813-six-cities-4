@@ -9,7 +9,7 @@ const placesOptionName = ['Popular','Price: low to high','Price: high to low','T
 function SortingOptions(): JSX.Element{
   const dispatch = useDispatch();
 
-  const selectedOption = useSelector((state: RootState) => state.sortingOption);
+  const selectedOption = useSelector((state: RootState) => state.mainPage.sortingOption);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOptionSelect = (option:string) => {

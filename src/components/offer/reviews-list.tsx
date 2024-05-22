@@ -2,13 +2,14 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { Reviews } from '../../types/types';
 import ReviewsItem from './reviews-item';
+import React from 'react';
 
 type ReviewsListProps = {
   reviews: Reviews;
 }
 
 function ReviewsList({reviews}: ReviewsListProps): JSX.Element{
-  const isReviewLoading = useSelector((state: RootState) => (state.isReviewLoading));
+  const isReviewLoading = useSelector((state: RootState) => (state.review.isReviewLoading));
   if (isReviewLoading) {
     return <span>Uploading reviews. Please wait.</span>;
   }
@@ -22,4 +23,6 @@ function ReviewsList({reviews}: ReviewsListProps): JSX.Element{
     </ul>
   );
 }
-export default ReviewsList;
+const MemoizedReviewsList = React.memo(ReviewsList);
+
+export default MemoizedReviewsList;

@@ -3,23 +3,27 @@ import { RootState } from '../../store';
 import { OfferCardData } from '../../types/types';
 import { getSortedList } from '../../utils/offers-util';
 import OfferCard from './offer-card';
+import React from 'react';
 
 type OfferListComponentProps = {
   offers: OfferCardData[];
+  sortingOption:string |null;
 };
 
-function OfferListComponent({ offers }: OfferListComponentProps): JSX.Element {
-  const isLoading = useSelector((state: RootState) => (state.isLoading));
-  const sortingOption = useSelector((state: RootState) => (state.sortingOption));
-  const authorizationStatus = useSelector((state: RootState) => (state.authorizationStatus));
+function OfferListComponent({ sortingOption, offers }: OfferListComponentProps): JSX.Element {
+  const isLoading = useSelector((state: RootState) => (state.status.isLoading));
+  const authorizationStatus = useSelector((state: RootState) => (state.user.authorizationStatus));
 
   if (isLoading) {
     return <span className="uploading">Uploading offers. Please wait.</span>;
   } else {
-    const sortedOffers = getSortedList(offers, sortingOption);
+    let sortedOffers = offers;
+    if(sortingOption){
+      sortedOffers = getSortedList(offers, sortingOption);
+    }
     return (
       <>
-        {sortedOffers.map((offer) => (
+        {(sortedOffers).map((offer) => (
           <OfferCard key={offer.id} offer={offer} isAuth={authorizationStatus}/>
         ))}
       </>
@@ -27,4 +31,6 @@ function OfferListComponent({ offers }: OfferListComponentProps): JSX.Element {
   }
 }
 
-export default OfferListComponent;
+const MemoizedOfferListComponent = React.memo(OfferListComponent);
+
+export default MemoizedOfferListComponent;

@@ -5,8 +5,8 @@ import { InternalRoutes } from '../../const/const';
 
 function AuthorizedUserHeader(): JSX.Element {
   const {userData, favoriteList} = useSelector((state: RootState) => ({
-    userData: state.userData,
-    favoriteList: state.favoriteOfferList
+    userData: state.user.userData,
+    favoriteList: state.offer.favoriteOfferList
   }));
   const onClick = () => {
     store.dispatch(logoutAction());

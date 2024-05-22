@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { sendReviewData } from '../../store/api-actions';
 import { RootState, store } from '../../store';
 import { useSelector } from 'react-redux';
+import React from 'react';
 
 type ReviewFormProps = {
   offerId: string;
 }
 
 function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
-  const error = useSelector((state: RootState) => (state.error));
+  const error = useSelector((state: RootState) => (state.status.error));
 
   const [review, setReview] = useState('');
   const [rating, setRating] = useState(0);

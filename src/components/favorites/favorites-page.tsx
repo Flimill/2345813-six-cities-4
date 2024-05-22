@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from 'react-redux';
-import FavoriteList from './favorite-list';
 import { RootState, store } from '../../store';
 import { useEffect } from 'react';
 import { fetchFavoriteOfferList } from '../../store/api-actions';
@@ -7,13 +6,14 @@ import { Navigate } from 'react-router-dom';
 import { InternalRoutes } from '../../const/const';
 import { OfferCardData } from '../../types/types';
 import { saveSelectedCity } from '../../utils/city-storage';
+import MemoizedFavoriteList from './favorite-list';
 
 function FavoritesPage(): JSX.Element {
   const dispatch = useDispatch();
   const { isLoading, authorizationStatus, favoriteOfferList } = useSelector((state: RootState) => ({
-    isLoading: state.isLoading,
-    authorizationStatus: state.authorizationStatus,
-    favoriteOfferList: state.favoriteOfferList,
+    isLoading: state.status.isLoading,
+    authorizationStatus: state.user.authorizationStatus,
+    favoriteOfferList: state.offer.favoriteOfferList,
   }));
 
   useEffect(() => {
@@ -58,7 +58,7 @@ function FavoritesPage(): JSX.Element {
                   </div>
                 </div>
                 <div className="favorites__places">
-                  <FavoriteList favorites={groupedFavorites[cityName]} />
+                  <MemoizedFavoriteList favorites={groupedFavorites[cityName]} />
                 </div>
               </li>
             ))}

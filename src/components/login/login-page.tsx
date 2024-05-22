@@ -11,8 +11,8 @@ const city = cityList[Math.floor(Math.random() * cityList.length)];
 
 function LoginPage(): JSX.Element {
   const { isLoading, authorizationStatus } = useSelector((state: RootState) => ({
-    isLoading: state.isLoading,
-    authorizationStatus: state.authorizationStatus,
+    isLoading: state.status.isLoading,
+    authorizationStatus: state.user.authorizationStatus,
   }));
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
