@@ -1,5 +1,5 @@
 import {createReducer} from '@reduxjs/toolkit';
-import { changeSelectedPoint, changeSortingOption, loadOffers, setAuthorizationStatus, setError, setFavoriteOfferList, setLoadingStatus, setReviews, setSelectedOffer, setUserData, updateCity } from './action';
+import { changeSelectedPoint, changeSortingOption, loadOffers, setAuthorizationStatus, setError, setFavoriteOfferList, setLoadingStatus, setReviewLoadingStatus, setReviews, setSelectedOffer, setUserData, updateCity } from './action';
 import { START_CITY, START_SORTING_OPTION } from '../const/const';
 import { FullOfferCardData, OfferCardData, Point, Reviews, UserData } from '../types/types';
 
@@ -11,7 +11,8 @@ type StateType = {
   selectedPoint: Point|undefined;
   selectedOffer: FullOfferCardData | undefined;
   isLoading: boolean;
-  error: string | null;
+  isReviewLoading: boolean;
+  error: string ;
   reviews: Reviews;
   authorizationStatus:boolean;
   userData: UserData|undefined;
@@ -25,7 +26,8 @@ const initialState: StateType = {
   selectedOffer: undefined,
   selectedPoint: undefined,
   isLoading: false,
-  error: null,
+  isReviewLoading: false,
+  error: '',
   reviews: [],
   authorizationStatus: false,
   userData: undefined
@@ -41,6 +43,9 @@ export const reducer = createReducer(initialState,(builder) => {
     })
     .addCase(setLoadingStatus, (state, action) => {
       state.isLoading = action.payload;
+    })
+    .addCase(setReviewLoadingStatus, (state, action) => {
+      state.isReviewLoading = action.payload;
     })
     .addCase(setError, (state, action) => {
       state.error = action.payload;

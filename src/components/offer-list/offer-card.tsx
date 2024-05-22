@@ -7,9 +7,10 @@ import { fetchFavoriteOfferList, updateFavoriteStatus } from '../../store/api-ac
 
 type OfferCardProps = {
   offer: OfferCardData;
+  isAuth: boolean;
 };
 
-function OfferCard({ offer }: OfferCardProps): JSX.Element {
+function OfferCard({ isAuth,offer }: OfferCardProps): JSX.Element {
   const dispatch = useDispatch();
   const mark: JSX.Element = <div>{offer.isPremium && <div className="place-card__mark" ><span>Premium</span></div>}</div>;
 
@@ -21,12 +22,15 @@ function OfferCard({ offer }: OfferCardProps): JSX.Element {
   };
 
   useEffect(() => {
-    store.dispatch(fetchFavoriteOfferList());
-  }, [isBookmarkActive]);
-
+    if(isAuth){
+      store.dispatch(fetchFavoriteOfferList());
+    }
+  }, [isBookmarkActive,isAuth]);
   const toggleBookmark = () => {
     setIsBookmarkActive(!isBookmarkActive);
-    store.dispatch(updateFavoriteStatus({ offerId: offer.id, status: !isBookmarkActive ? 1 : 0 }));
+    if(isAuth){
+      store.dispatch(updateFavoriteStatus({ offerId: offer.id, status: !isBookmarkActive ? 1 : 0 }));
+    }
   };
 
   const ratingWidth = `${(Math.round(offer.rating) / 5) * 100 }%`;

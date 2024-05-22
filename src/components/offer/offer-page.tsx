@@ -3,13 +3,13 @@ import Map from '../map/map';
 import { MapSize} from '../../types/types';
 import OfferListComponent from '../offer-list/offer-list-component';
 
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { cityPoints } from '../../const/city-points';
 import { RootState, store } from '../../store';
 import {fetchNearbyOffersAction, fetchReviewsList, fetchSelectedOffer, updateFavoriteStatus } from '../../store/api-actions';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { START_CITY } from '../../const/const';
+import { InternalRoutes, START_CITY } from '../../const/const';
 import ImageList from './image-list';
 import HeaderComponent from '../header/header-component';
 
@@ -21,10 +21,11 @@ const mapSize: MapSize = {
 function OfferPage(): JSX.Element {
   const { id } = useParams();
 
-  const { isLoading, offers, selectedOffer } = useSelector((state: RootState) => ({
+  const { isLoading, offers, selectedOffer,error } = useSelector((state: RootState) => ({
     isLoading: state.isLoading,
     offers: state.offerList,
-    selectedOffer: state.selectedOffer
+    selectedOffer: state.selectedOffer,
+    error: state.error
   }));
 
 
@@ -35,6 +36,9 @@ function OfferPage(): JSX.Element {
       store.dispatch(fetchReviewsList(id));
     }
   }, [id]);
+  if (error === 'COMMON_ERROR'){
+    return <Navigate to={InternalRoutes.Error404Page}/>;
+  }
   if (isLoading || !selectedOffer) {
     return <span>Uploading offer. Please wait.</span>;
   }
@@ -134,7 +138,7 @@ function OfferPage(): JSX.Element {
                   </p>
                 </div>
               </div>
-              {<ReviewSection/>}
+              {<ReviewSection offerId={selectedOffer.id}/>}
             </div>
           </div>
           <section className="offer__map map">

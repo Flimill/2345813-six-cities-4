@@ -12,11 +12,15 @@ export const setFavoriteOfferList = createAction('SET_FAVORITE_OFFER_LIST', (val
   payload: value
 }));
 
-export const setLoadingStatus = createAction('SET_QUESTIONS_DATA_LOADING_STATUS', (value: boolean) => ({
+export const setLoadingStatus = createAction('SET_LOADING_STATUS', (value: boolean) => ({
   payload: value
 }));
 
-export const setError = createAction('SET_ERROR', (value: string | null) => ({
+export const setReviewLoadingStatus = createAction('SET_REVIEW_LOADING_STATUS', (value: boolean) => ({
+  payload: value
+}));
+
+export const setError = createAction('SET_ERROR', (value: string) => ({
   payload: value
 }));
 

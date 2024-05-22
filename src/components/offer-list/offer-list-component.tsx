@@ -9,10 +9,9 @@ type OfferListComponentProps = {
 };
 
 function OfferListComponent({ offers }: OfferListComponentProps): JSX.Element {
-  const { isLoading, sortingOption } = useSelector((state: RootState) => ({
-    isLoading: state.isLoading,
-    sortingOption: state.sortingOption,
-  }));
+  const isLoading = useSelector((state: RootState) => (state.isLoading));
+  const sortingOption = useSelector((state: RootState) => (state.sortingOption));
+  const authorizationStatus = useSelector((state: RootState) => (state.authorizationStatus));
 
   if (isLoading) {
     return <span className="uploading">Uploading offers. Please wait.</span>;
@@ -21,7 +20,7 @@ function OfferListComponent({ offers }: OfferListComponentProps): JSX.Element {
     return (
       <>
         {sortedOffers.map((offer) => (
-          <OfferCard key={offer.id} offer={offer} />
+          <OfferCard key={offer.id} offer={offer} isAuth={authorizationStatus}/>
         ))}
       </>
     );

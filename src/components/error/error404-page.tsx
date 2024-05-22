@@ -1,3 +1,5 @@
+import { InternalRoutes } from '../../const/const';
+
 function Error404Page(): JSX.Element {
   return (
     <html>
@@ -64,7 +66,7 @@ function Error404Page(): JSX.Element {
           <div className="err">4</div>
           <div className="err0">0</div>
           <div className="err2">4</div>
-          <div className="msg">Может быть, эта страница переместилась? Была удалена? Скрывается на карантине? Никогда не существовала?<p>Давай вернемся <a href="/">домой</a> и попробуем оттуда.</p></div>
+          <div className="msg">Может быть, эта страница переместилась? Была удалена? Скрывается на карантине? Никогда не существовала?<p>Давай вернемся <a href={InternalRoutes.Main}>домой</a> и попробуем оттуда.</p></div>
         </div>
       </body>
     </html>

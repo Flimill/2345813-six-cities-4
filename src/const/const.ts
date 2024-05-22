@@ -16,7 +16,8 @@ export enum InternalRoutes{
   Login = '/login',
   Main = '/',
   Favorites = '/favorites',
-  Offer = '/offer/'
+  Offer = '/offer/',
+  Error404Page = '/Error404Page',
 }
 
 export enum APIRoutes {

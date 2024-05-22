@@ -95,6 +95,13 @@ export type LoginData = {
   password:string;
 }
 
+export type ReviewData = {
+  offerId:string;
+  comment:string;
+  rating:number;
+}
+
+
 export type updateFavoriteData = {
   offerId:string;
   status:number;
