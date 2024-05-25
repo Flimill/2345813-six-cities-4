@@ -1,7 +1,7 @@
 import ReviewSection from './review-section';
 import Map from '../map/map';
 import { Navigate, useParams } from 'react-router-dom';
-import { CITY_POINTS, LoadingMessage, OFFER_MAP_SIZE } from '../../const/const';
+import { CITY_POINTS, LoadingMessage, MAX_NEAR_OFFERS, OFFER_MAP_SIZE } from '../../const/const';
 import { RootState, store } from '../../store';
 import { fetchNearbyOffersAction, fetchReviewsList, fetchSelectedOffer, updateFavoriteStatus } from '../../store/api-actions';
 import { useEffect, useState } from 'react';
@@ -73,7 +73,8 @@ function OfferPage(): JSX.Element {
     return <Navigate to={InternalRoute.Login} />;
   }
 
-  const points = [...offers.slice(0, 3).map((offer) => offer.location), selectedOffer.location];
+  const nearOffers = offers.slice(0, MAX_NEAR_OFFERS);
+  const points = [...nearOffers.map((offer) => offer.location), selectedOffer.location];
   const ratingWidth = `${(Math.round(selectedOffer.rating) / 5) * 100}%`;
   const premiumMark = <div className="offer__mark"><span>Premium</span></div>;
 
@@ -169,7 +170,7 @@ function OfferPage(): JSX.Element {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {<MemoizedOfferListComponent offers={offers} sortingOption={null} isMapOn={false} />}
+              {<MemoizedOfferListComponent offers={nearOffers} sortingOption={null} isMapOn={false} />}
             </div>
           </section>
         </div>

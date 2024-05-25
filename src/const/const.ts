@@ -13,6 +13,7 @@ export const START_CITY = 'Paris';
 
 export const START_SORTING_OPTION = 'Popular';
 
+export const MAX_NEAR_OFFERS = 3;
 
 export const MAX_RATING = 5;
 
