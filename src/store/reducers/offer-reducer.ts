@@ -1,18 +1,15 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { FullOfferCardData, OfferCardData } from '../../types/types';
-import { loadOffers, setFavoriteOfferList, setSelectedOffer } from '../action';
+import { loadOffers, setSelectedOffer } from '../action';
 
 type OfferStateType = {
     offerList: OfferCardData[];
-    favoriteOfferList: OfferCardData[];
     selectedOffer: FullOfferCardData | undefined;
   }
 
 const initialOfferState: OfferStateType = {
 
   offerList: [],
-  favoriteOfferList: [],
-
   selectedOffer: undefined,
 };
 
@@ -23,8 +20,5 @@ export const offerReducer = createReducer(initialOfferState,(builder) => {
     })
     .addCase(setSelectedOffer, (state, action) => {
       state.selectedOffer = action.payload;
-    })
-    .addCase(setFavoriteOfferList, (state, action) => {
-      state.favoriteOfferList = action.payload;
     });
 });

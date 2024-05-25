@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateCity } from '../../store/action';
 import { RootState } from '../../store';
 import { getSelectedCity, saveSelectedCity } from '../../utils/city-storage';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 type CityListProps = {
   cityList: string[];
@@ -11,10 +11,13 @@ type CityListProps = {
 function CityListComponent({ cityList }: CityListProps): JSX.Element {
   const dispatch = useDispatch();
   const selectedCity = useSelector((state: RootState) => state.mainPage.city);
-  if(getSelectedCity() !== selectedCity){
-    dispatch(updateCity(getSelectedCity()));
-  }
 
+  useEffect(() => {
+    const storedCity = getSelectedCity();
+    if (storedCity && storedCity !== selectedCity) {
+      dispatch(updateCity(storedCity));
+    }
+  }, [dispatch, selectedCity]);
 
   const handleCityClick = (city: string) => {
     saveSelectedCity(city);
@@ -26,7 +29,7 @@ function CityListComponent({ cityList }: CityListProps): JSX.Element {
       {cityList.map((city) => (
         <li key={city} className="locations__item">
           <a
-            className={`locations__item-link tabs__item${(city === selectedCity) ? ' tabs__item--active' : ''}`}
+            className={`locations__item-link tabs__item${city === selectedCity ? ' tabs__item--active' : ''}`}
             href="#"
             onClick={(e) => {
               e.preventDefault();

@@ -1,21 +1,20 @@
 import { useState } from 'react';
-import { InternalRoutes } from '../../const/const';
+import { CITY_LIST, InternalRoute, LoadingMessage } from '../../const/const';
 import { sendLoginData } from '../../store/api-actions';
 import { RootState, store } from '../../store';
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import cityList from '../../const/city-list';
 import { saveSelectedCity } from '../../utils/city-storage';
-
-const city = cityList[Math.floor(Math.random() * cityList.length)];
+import ErrorMessage from '../error-message/error-message';
 
 function LoginPage(): JSX.Element {
-  const { isLoading, authorizationStatus } = useSelector((state: RootState) => ({
-    isLoading: state.status.isLoading,
-    authorizationStatus: state.user.authorizationStatus,
-  }));
+  const isLoading = useSelector((state: RootState) => state.status.isLoading);
+  const authorizationStatus = useSelector((state: RootState) => state.user.authorizationStatus);
+  const error = useSelector((state: RootState) => state.status.error);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [city] = useState(CITY_LIST[Math.floor(Math.random() * CITY_LIST.length)]);
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -27,17 +26,18 @@ function LoginPage(): JSX.Element {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    store.dispatch(sendLoginData({email, password}));
+    store.dispatch(sendLoginData({ email, password }));
   };
-  if (isLoading) {
-    return <span>Please wait.</span>;
-  }
-  if (authorizationStatus){
-    return <Navigate to={InternalRoutes.Main}/>;
-  }
 
+  if (isLoading) {
+    return <span>{LoadingMessage.Neutral}</span>;
+  }
+  if (authorizationStatus) {
+    return <Navigate to={InternalRoute.Main} />;
+  }
   return (
     <div className="page page--gray page--login">
+      <ErrorMessage />
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
@@ -65,6 +65,7 @@ function LoginPage(): JSX.Element {
                   value={email}
                   onChange={handleEmailChange}
                   required
+                  autoComplete="email"
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
@@ -77,14 +78,18 @@ function LoginPage(): JSX.Element {
                   value={password}
                   onChange={handlePasswordChange}
                   required
+                  autoComplete="current-password"
                 />
+                {(error === 'VALIDATION_ERROR') ?
+                  <section style={{ color: 'red' }}>Некорректый email или пароль! Пароль должен содержать 1 букву и 1 цифру! Email должен быть подобного вида: user@a.com!</section>
+                  : ''}
               </div>
               <button className="login__submit form__submit button" type="submit">Sign in</button>
             </form>
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href={InternalRoutes.Main} onClick={()=>saveSelectedCity(city)}>
+              <a className="locations__item-link" href={InternalRoute.Main} onClick={() => saveSelectedCity(city)}>
                 <span>{city}</span>
               </a>
             </div>

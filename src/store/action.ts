@@ -1,44 +1,61 @@
-import {createAction} from '@reduxjs/toolkit';
+import { createAction } from '@reduxjs/toolkit';
 import { FullOfferCardData, OfferCardData, Point, Reviews, UserData } from '../types/types';
 
-export const updateCity = createAction('createAction', (name:string) => ({
+export const updateCity = createAction('city/update', (name: string) => ({
   payload: name,
 }));
-export const loadOffers = createAction('LOAD_OFFERS', (value: OfferCardData[]) => ({
-  payload: value
+
+export const loadOffers = createAction('offers/load', (values: OfferCardData[]) => ({
+  payload: values,
 }));
 
-export const setFavoriteOfferList = createAction('SET_FAVORITE_OFFER_LIST', (value: OfferCardData[]) => ({
-  payload: value
+export const setFavoriteOfferList = createAction('favorites/setOfferList', (values: OfferCardData[]) => ({
+  payload: values,
 }));
 
-export const setLoadingStatus = createAction('SET_LOADING_STATUS', (value: boolean) => ({
-  payload: value
+export const setLoadingStatus = createAction('status/setLoading', (value: boolean) => ({
+  payload: value,
 }));
 
-export const setReviewLoadingStatus = createAction('SET_REVIEW_LOADING_STATUS', (value: boolean) => ({
-  payload: value
+export const setReviewLoadingStatus = createAction('status/setReviewLoading', (value: boolean) => ({
+  payload: value,
 }));
 
-export const setError = createAction('SET_ERROR', (value: string) => ({
-  payload: value
+export const setError = createAction('status/setError', (value: string) => ({
+  payload: value,
 }));
 
-export const changeSelectedPoint = createAction('CHANGE_SELECTED_POINT', (point: Point|undefined) => ({
-  payload: point
+export const changeSelectedPoint = createAction('map/changeSelectedPoint', (point: Point | undefined) => ({
+  payload: point,
 }));
-export const changeSortingOption = createAction('CHANGE_SORTING_OPTION', (option: string) => ({
-  payload: option
+
+export const changeSortingOption = createAction('sorting/changeOption', (option: string) => ({
+  payload: option,
 }));
-export const setSelectedOffer = createAction('SET_SELECTED_OFFER', (offer: FullOfferCardData) => ({
-  payload: offer
+
+export const setSelectedOffer = createAction('offers/setSelected', (offer: FullOfferCardData) => ({
+  payload: offer,
 }));
-export const setReviews = createAction('SET_REVIEWS', (reviews: Reviews) => ({
-  payload: reviews
+
+export const setReviews = createAction('reviews/setAll', (reviews: Reviews) => ({
+  payload: reviews,
 }));
-export const setAuthorizationStatus = createAction('SET_AUTHORIZATION_STATUS', (authorizationStatus: boolean) => ({
-  payload: authorizationStatus
+
+export const setAuthorizationStatus = createAction('user/setAuthorizationStatus', (authorizationStatus: boolean) => ({
+  payload: authorizationStatus,
 }));
-export const setUserData = createAction('SET_USER_DATA', (userData: UserData|undefined) => ({
-  payload: userData
+
+export const setUserData = createAction('user/setData', (userData: UserData | undefined) => ({
+  payload: userData,
+}));
+
+export const incrementFavoriteNumber = createAction('favorites/incrementNumber');
+export const decrementFavoriteNumber = createAction('favorites/decrementNumber');
+
+export const setFavoriteNumber = createAction('favorites/setNumber', (number: number) => ({
+  payload: number,
+}));
+
+export const setFavoritesLoading = createAction('favorites/setLoading', (status: boolean) => ({
+  payload: status,
 }));

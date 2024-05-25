@@ -1,47 +1,60 @@
 import { useDispatch } from 'react-redux';
 import { OfferCardData } from '../../types/types';
-import { useEffect, useState } from 'react';
-import { changeSelectedPoint } from '../../store/action';
+import { useState } from 'react';
+import { changeSelectedPoint, decrementFavoriteNumber, incrementFavoriteNumber } from '../../store/action';
 import { store } from '../../store';
-import { fetchFavoriteOfferList, updateFavoriteStatus } from '../../store/api-actions';
+import { updateFavoriteStatus } from '../../store/api-actions';
 import { Navigate } from 'react-router-dom';
-import { InternalRoutes } from '../../const/const';
+import { InternalRoute, MAX_RATING } from '../../const/const';
 
 type OfferCardProps = {
   offer: OfferCardData;
   isAuth: boolean;
+  isMapOn:boolean;
 };
 
-function OfferCard({ isAuth,offer }: OfferCardProps): JSX.Element {
+function OfferCard({ isAuth, offer,isMapOn }: OfferCardProps): JSX.Element {
   const dispatch = useDispatch();
-  const mark: JSX.Element = <div>{offer.isPremium && <div className="place-card__mark" ><span>Premium</span></div>}</div>;
+  const mark: JSX.Element = <div>{offer.isPremium && <div className="place-card__mark"><span>Premium</span></div>}</div>;
 
   const [isBookmarkActive, setIsBookmarkActive] = useState(offer.isFavorite);
+  const [redirectToLogin, setRedirectToLogin] = useState(false);
 
   const point = {
     location: offer.location,
-    name: offer.title
+    name: offer.title,
   };
 
-  useEffect(() => {
-    if(isAuth){
-      store.dispatch(fetchFavoriteOfferList());
-    }
-  }, [isBookmarkActive,isAuth]);
-  const toggleBookmark = () => {
-    setIsBookmarkActive(!isBookmarkActive);
-    if(isAuth){
+  const handleBookmark = () => {
+    if (isAuth) {
+      if (isBookmarkActive) {
+        dispatch(decrementFavoriteNumber());
+      } else {
+        dispatch(incrementFavoriteNumber());
+      }
+
+      setIsBookmarkActive(!isBookmarkActive);
+
       store.dispatch(updateFavoriteStatus({ offerId: offer.id, status: !isBookmarkActive ? 1 : 0 }));
-    } else{
-      return <Navigate to={InternalRoutes.Login} />;
+    } else {
+      setRedirectToLogin(true);
     }
   };
 
-  const ratingWidth = `${(Math.round(offer.rating) / 5) * 100 }%`;
-  const offerLink = `/offer/${offer.id}`;
+  const ratingWidth = `${(Math.round(offer.rating) / MAX_RATING) * 100}%`;
+  const offerLink = `${InternalRoute.Offer}${offer.id}`;
+
+  if (redirectToLogin) {
+    return <Navigate to={InternalRoute.Login} />;
+  }
+  function handleMouseEnter(){
+    if(isMapOn){
+      dispatch(changeSelectedPoint(point));
+    }
+  }
 
   return (
-    <article className="cities__card place-card" onMouseEnter={() => dispatch(changeSelectedPoint(point))}>
+    <article className="cities__card place-card" onMouseEnter={handleMouseEnter}>
       {mark}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href={offerLink}>
@@ -57,7 +70,7 @@ function OfferCard({ isAuth,offer }: OfferCardProps): JSX.Element {
           <button
             className={`place-card__bookmark-button button ${isBookmarkActive ? 'place-card__bookmark-button--active' : ''}`}
             type="button"
-            onClick={toggleBookmark}
+            onClick={handleBookmark}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>

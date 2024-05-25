@@ -1,4 +1,4 @@
-import { cityPoints } from '../const/city-points';
+import { CITY_POINTS } from '../const/const';
 import { City, OfferCardData } from '../types/types';
 
 export function getOfferListByCity(city:string, offerList:OfferCardData[]): OfferCardData[] {
@@ -10,7 +10,7 @@ export function getPointByCity(city:string, offerList:OfferCardData[]): City {
   if (cityPoint) {
     return cityPoint;
   } else {
-    return cityPoints[city];
+    return CITY_POINTS[city];
   }
 }
 
@@ -22,6 +22,6 @@ export function getSortedList(offerList: OfferCardData[], selectedOption: string
     sortedItems.sort((a, b) => b.price - a.price);
   } else if(selectedOption === 'Top rated first'){
     sortedItems.sort((a, b) => b.rating - a.rating);
-  } //else (selectedOption === 'Popular')
+  } //Popular
   return sortedItems;
 }

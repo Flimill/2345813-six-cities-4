@@ -1,50 +1,40 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState, store } from '../../store';
-import { useEffect } from 'react';
-import { fetchFavoriteOfferList } from '../../store/api-actions';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 import { Navigate } from 'react-router-dom';
-import { InternalRoutes } from '../../const/const';
+import { InternalRoute, LoadingMessage } from '../../const/const';
 import { OfferCardData } from '../../types/types';
 import { saveSelectedCity } from '../../utils/city-storage';
 import MemoizedFavoriteList from './favorite-list';
-import HeaderComponent from '../header/header-component';
+import HeaderComponent from '../header-component/header-component';
+import ErrorMessage from '../error-message/error-message';
 
 function FavoritesPage(): JSX.Element {
-  const dispatch = useDispatch();
-  const { isLoading, authorizationStatus, favoriteOfferList } = useSelector((state: RootState) => ({
-    isLoading: state.status.isLoading,
-    authorizationStatus: state.user.authorizationStatus,
-    favoriteOfferList: state.offer.favoriteOfferList,
-  }));
-
-  useEffect(() => {
-    store.dispatch(fetchFavoriteOfferList());
-  }, [dispatch]);
+  const isLoading = useSelector((state: RootState) => state.status.isLoading);
+  const authorizationStatus = useSelector((state: RootState) => state.user.authorizationStatus);
+  const favoriteOfferList = useSelector((state: RootState) => state.favorite.favoriteOfferList);
 
   if (isLoading) {
-    return <span>Uploading offer. Please wait.</span>;
+    return <span>{LoadingMessage.Favorites}</span>;
   }
 
   if (!authorizationStatus) {
-    return <Navigate to={InternalRoutes.Login} />;
+    return <Navigate to={InternalRoute.Login} />;
   }
 
-  interface GroupedFavorites {
-    [city: string]: OfferCardData[];
-  }
 
-  const groupedFavorites = favoriteOfferList.reduce<GroupedFavorites>((acc, favorite) => {
+  const groupedFavorites = favoriteOfferList.reduce<Record<string, OfferCardData[]>>((cities, favorite) => {
     const city = favorite.city.name;
-    if (!acc[city]) {
-      acc[city] = [];
+    if (!cities[city]) {
+      cities[city] = [];
     }
-    acc[city].push(favorite);
-    return acc;
+    cities[city].push(favorite);
+    return cities;
   }, {});
 
 
   return (
     <div className="page">
+      <ErrorMessage />
       <header className="header">
         <div className="container">
           <HeaderComponent/>
@@ -68,7 +58,7 @@ function FavoritesPage(): JSX.Element {
                   <li key={cityName} className="favorites__locations-items">
                     <div className="favorites__locations locations locations--current">
                       <div className="locations__item">
-                        <a className="locations__item-link" href={InternalRoutes.Main} onClick={()=>saveSelectedCity(cityName)}>
+                        <a className="locations__item-link" href={InternalRoute.Main} onClick={()=>saveSelectedCity(cityName)}>
                           <span>{cityName}</span>
                         </a>
                       </div>

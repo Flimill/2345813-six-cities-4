@@ -1,7 +1,9 @@
 import { Review } from '../../types/types';
+import { formatDate } from '../../utils/review-utils';
 type ReviewsItemProps = {
     review: Review;
 }
+
 
 function ReviewsItem({review}: ReviewsItemProps): JSX.Element{
   const ratingWidth = `${(review.rating / 5) * 100 }%`;
@@ -25,7 +27,7 @@ function ReviewsItem({review}: ReviewsItemProps): JSX.Element{
         <p className="reviews__text">
           {review.comment}
         </p>
-        <time className="reviews__time" dateTime={review.date}>{review.date}</time>
+        <time className="reviews__time" dateTime={review.date}>{formatDate(review.date)}</time>
       </div>
     </li>
   );

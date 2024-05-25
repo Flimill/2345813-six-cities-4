@@ -1,31 +1,28 @@
 import ReviewSection from './review-section';
 import Map from '../map/map';
-import { MapSize} from '../../types/types';
 import { Navigate, useParams } from 'react-router-dom';
-import { cityPoints } from '../../const/city-points';
+import { CITY_POINTS, LoadingMessage, OFFER_MAP_SIZE } from '../../const/const';
 import { RootState, store } from '../../store';
-import {fetchNearbyOffersAction, fetchReviewsList, fetchSelectedOffer, updateFavoriteStatus } from '../../store/api-actions';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { InternalRoutes, START_CITY } from '../../const/const';
-import HeaderComponent from '../header/header-component';
+import { fetchNearbyOffersAction, fetchReviewsList, fetchSelectedOffer, updateFavoriteStatus } from '../../store/api-actions';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { InternalRoute, START_CITY } from '../../const/const';
+import HeaderComponent from '../header-component/header-component';
 import MemoizedOfferListComponent from '../offer-list/offer-list-component';
 import MemoizedImageList from './image-list';
-
-const mapSize: MapSize = {
-  height: '100%',
-  width: '100%'
-};
+import { changeSelectedPoint, decrementFavoriteNumber, incrementFavoriteNumber } from '../../store/action';
+import ErrorMessage from '../error-message/error-message';
 
 function OfferPage(): JSX.Element {
   const { id } = useParams();
-  const { isLoading, offers, selectedOffer,error } = useSelector((state: RootState) => ({
-    isLoading: state.status.isLoading,
-    offers: state.offer.offerList,
-    selectedOffer: state.offer.selectedOffer,
-    error: state.status.error,
-  }));
-
+  const dispatch = useDispatch();
+  const isLoading = useSelector((state: RootState) => state.status.isLoading);
+  const offers = useSelector((state: RootState) => state.offer.offerList);
+  const selectedOffer = useSelector((state: RootState) => state.offer.selectedOffer);
+  const error = useSelector((state: RootState) => state.status.error);
+  const isAuth = useSelector((state: RootState) => (state.user.authorizationStatus));
+  const [isBookmarkActive, setIsBookmarkActive] = useState(false);
+  const [redirectToLogin, setRedirectToLogin] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -34,40 +31,65 @@ function OfferPage(): JSX.Element {
       store.dispatch(fetchReviewsList(id));
     }
   }, [id]);
-  if (error === 'COMMON_ERROR'){
-    return <Navigate to={InternalRoutes.Error404Page}/>;
+
+  useEffect(() => {
+    if (selectedOffer) {
+      setIsBookmarkActive(selectedOffer.isFavorite);
+      dispatch(changeSelectedPoint({
+        location: selectedOffer.location,
+        name: selectedOffer.title,
+      }));
+    }
+  }, [selectedOffer, dispatch]);
+
+  if (error === 'COMMON_ERROR') {
+    return <Navigate to={InternalRoute.Error404Page} />;
   }
   if (isLoading || !selectedOffer) {
-    return <span>Uploading offer. Please wait.</span>;
+    return <span>{LoadingMessage.Offer}</span>;
   }
 
-  let offersCity:string = START_CITY;
+  let offersCity: string = START_CITY;
   if (selectedOffer) {
     offersCity = selectedOffer.city.name;
   }
 
+  const handleBookmark = () => {
+    if (isAuth) {
+      if (isBookmarkActive) {
+        dispatch(decrementFavoriteNumber());
+      } else {
+        dispatch(incrementFavoriteNumber());
+      }
 
-  const points = offers.map((offer) => (offer.location));
+      setIsBookmarkActive(!isBookmarkActive);
+      store.dispatch(updateFavoriteStatus({ offerId: selectedOffer.id, status: !isBookmarkActive ? 1 : 0 }));
+    } else {
+      setRedirectToLogin(true);
+    }
+  };
 
+  if (redirectToLogin) {
+    return <Navigate to={InternalRoute.Login} />;
+  }
 
-  const ratingWidth = `${(Math.round(selectedOffer.rating) / 5) * 100 }%`;
+  const points = [...offers.slice(0, 3).map((offer) => offer.location), selectedOffer.location];
+  const ratingWidth = `${(Math.round(selectedOffer.rating) / 5) * 100}%`;
   const premiumMark = <div className="offer__mark"><span>Premium</span></div>;
 
-  const toggleBookmark = () => {
-    store.dispatch(updateFavoriteStatus({offerId: selectedOffer.id , status: (!selectedOffer.isFavorite) ? 1 : 0}));
-  };
   return (
     <div className="page">
+      <ErrorMessage />
       <header className="header">
         <div className="container">
-          <HeaderComponent/>
+          <HeaderComponent />
         </div>
       </header>
 
       <main className="page__main page__main--offer">
         <section className="offer">
           <div className="offer__gallery-container container">
-            <MemoizedImageList images={selectedOffer.images}/>
+            <MemoizedImageList images={selectedOffer.images} />
           </div>
           <div className="offer__container container">
             <div className="offer__wrapper">
@@ -76,8 +98,8 @@ function OfferPage(): JSX.Element {
                 <h1 className="offer__name">
                   {selectedOffer.title}
                 </h1>
-                <button className={`offer__bookmark-button button ${(selectedOffer.isFavorite) ? 'offer__bookmark-button--active' : ''}`}
-                  type="button" onClick={toggleBookmark}
+                <button className={`offer__bookmark-button button ${(isBookmarkActive) ? 'offer__bookmark-button--active' : ''}`}
+                  type="button" onClick={handleBookmark}
                 >
                   <svg className="offer__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
@@ -87,7 +109,7 @@ function OfferPage(): JSX.Element {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{width: ratingWidth}}></span>
+                  <span style={{ width: ratingWidth }}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">{selectedOffer.rating}</span>
@@ -136,18 +158,18 @@ function OfferPage(): JSX.Element {
                   </p>
                 </div>
               </div>
-              {<ReviewSection offerId={selectedOffer.id}/>}
+              {<ReviewSection offerId={selectedOffer.id} />}
             </div>
           </div>
           <section className="offer__map map">
-            {<Map city={cityPoints[offersCity]} points={points} mapSize={mapSize}/>}
+            {<Map city={CITY_POINTS[offersCity]} points={points} mapSize={OFFER_MAP_SIZE} />}
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {<MemoizedOfferListComponent offers={offers} sortingOption={null}/>}
+              {<MemoizedOfferListComponent offers={offers} sortingOption={null} isMapOn={false} />}
             </div>
           </section>
         </div>

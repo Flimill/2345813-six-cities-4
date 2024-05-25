@@ -2,9 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeSortingOption } from '../../store/action';
 import { RootState } from '../../store';
-
-const placesOptionName = ['Popular','Price: low to high','Price: high to low','Top rated first'];
-
+import { PLACES_OPTION_NAMES } from '../../const/const';
 
 function SortingOptions(): JSX.Element{
   const dispatch = useDispatch();
@@ -16,12 +14,12 @@ function SortingOptions(): JSX.Element{
     dispatch(changeSortingOption(option));
   };
 
-  const toggleOpen = () => {
+  const handleOpen = () => {
     setIsOpen(!isOpen);
   };
 
   return(
-    <form className="places__sorting" action="#" method="get" onClick={toggleOpen}>
+    <form className="places__sorting" action="#" method="get" onClick={handleOpen}>
       <span className="places__sorting-caption">Sort by</span>
       <span className="places__sorting-type" tabIndex={0}>
         {selectedOption}
@@ -30,7 +28,7 @@ function SortingOptions(): JSX.Element{
         </svg>
       </span>
       <ul className={`places__options places__options--custom ${isOpen ? 'places__options--opened' : 'places__options--closed'}`}>
-        {placesOptionName.map((item)=>(
+        {PLACES_OPTION_NAMES.map((item)=>(
           <li className={`places__option${(item === selectedOption) ? ' places__option--active' : ''}`} key={item} tabIndex={0} onClick={() => handleOptionSelect(item)}>{item}</li>
         ))}
       </ul>

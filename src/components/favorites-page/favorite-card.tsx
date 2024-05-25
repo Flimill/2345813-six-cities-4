@@ -1,25 +1,33 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { OfferCardData } from '../../types/types';
 import { store } from '../../store';
-import { fetchFavoriteOfferList, updateFavoriteStatus } from '../../store/api-actions';
+import { updateFavoriteStatus } from '../../store/api-actions';
+import { useDispatch } from 'react-redux';
+import { decrementFavoriteNumber, incrementFavoriteNumber } from '../../store/action';
+import { InternalRoute, MAX_RATING } from '../../const/const';
 
 type FavoriteCardProps = {
   favorite: OfferCardData;
 };
 
 function FavoriteCard({ favorite }: FavoriteCardProps): JSX.Element {
+  const dispatch = useDispatch();
   const mark: JSX.Element = <div>{favorite.isPremium && <div className="place-card__mark" ><span>Premium</span></div>}</div>;
   const [isBookmarkActive, setIsBookmarkActive] = useState(favorite.isFavorite);
-  useEffect(() => {
-    store.dispatch(fetchFavoriteOfferList());
+  const handleBookmark = () => {
+    if (isBookmarkActive) {
+      dispatch(decrementFavoriteNumber());
+    } else {
+      dispatch(incrementFavoriteNumber());
+    }
 
-  }, [isBookmarkActive]);
-  const toggleBookmark = () => {
     setIsBookmarkActive(!isBookmarkActive);
+
     store.dispatch(updateFavoriteStatus({ offerId: favorite.id, status: !isBookmarkActive ? 1 : 0 }));
   };
-  const ratingWidth = `${(Math.round(favorite.rating) / 5) * 100 }%`;
-  const offerLink = `/offer/${favorite.id}`;
+
+  const ratingWidth = `${(Math.round(favorite.rating) / MAX_RATING) * 100 }%`;
+  const offerLink = `${InternalRoute.Offer}${favorite.id}`;
   return (
 
     <article className="favorites__card place-card">
@@ -35,7 +43,7 @@ function FavoriteCard({ favorite }: FavoriteCardProps): JSX.Element {
             <b className="place-card__price-value">&euro;{favorite.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`place-card__bookmark-button ${(isBookmarkActive) ? 'place-card__bookmark-button--active' : ''} button`} type="button" onClick={toggleBookmark}>
+          <button className={`place-card__bookmark-button ${(isBookmarkActive) ? 'place-card__bookmark-button--active' : ''} button`} type="button" onClick={handleBookmark}>
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>

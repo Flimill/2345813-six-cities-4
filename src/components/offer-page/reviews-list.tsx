@@ -3,6 +3,7 @@ import { RootState } from '../../store';
 import { Reviews } from '../../types/types';
 import ReviewsItem from './reviews-item';
 import React from 'react';
+import { LoadingMessage } from '../../const/const';
 
 type ReviewsListProps = {
   reviews: Reviews;
@@ -11,7 +12,7 @@ type ReviewsListProps = {
 function ReviewsList({reviews}: ReviewsListProps): JSX.Element{
   const isReviewLoading = useSelector((state: RootState) => (state.review.isReviewLoading));
   if (isReviewLoading) {
-    return <span>Uploading reviews. Please wait.</span>;
+    return <span>{LoadingMessage.Reviews}</span>;
   }
   const rewiewsComponent: JSX.Element[] = [];
   for (let i = 0; i < reviews.length; i++) {
