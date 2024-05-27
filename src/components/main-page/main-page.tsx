@@ -37,7 +37,7 @@ function MainPage(): JSX.Element {
     return <span>{LoadingMessage.Neutral}</span>;
   }
   return (
-    <div className="page page--gray page--main">
+    <div className="page page--gray page--main" data-testid="main-page">
       <ErrorMessage />
       <header className="header">
         <div className="container">
