@@ -72,7 +72,7 @@ describe('Component: OfferCard', () => {
     await userEvent.click(bookmarkButton);
 
 
-    expect(window.location.pathname).toBe('/login'); // Меняем на строку адреса, которая должна быть в случае перенаправления
+    expect(window.location.pathname).toBe('/login'); 
   });
 
   it('should display correct rating', () => {
