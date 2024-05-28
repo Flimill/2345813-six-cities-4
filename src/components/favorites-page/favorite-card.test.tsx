@@ -53,7 +53,6 @@ describe('Component: FavoriteCard', () => {
   });
 
 
-
   it('should display correct rating', () => {
     const store = mockStore({});
 

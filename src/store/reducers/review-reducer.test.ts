@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { setReviewLoadingStatus, setReviews } from '../../../store/action';
-import { reviewReducer } from '../../../store/reducers/review-reducer';
-import { Reviews } from '../../../types/types';
+import { setReviewLoadingStatus, setReviews } from '../action';
+import { reviewReducer } from './review-reducer';
+import { Reviews } from '../../types/types';
 
 describe('reviewReducer', () => {
   it('should return the initial state', () => {

@@ -59,7 +59,7 @@ describe('FavoriteList', () => {
 
     render(
       <Provider store={store}>
-        <FavoriteList favorites={mockFavorites}  />
+        <FavoriteList favorites={mockFavorites} />
       </Provider>
     );
 

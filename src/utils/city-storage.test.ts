@@ -1,5 +1,5 @@
-import { getSelectedCity, saveSelectedCity, dropSelectedCity, City } from '../../utils/city-storage';
-import { START_CITY } from '../../const/const';
+import { getSelectedCity, saveSelectedCity, dropSelectedCity, City } from './city-storage';
+import { START_CITY } from '../const/const';
 
 describe('City Storage Utils', () => {
   const mockCity: City = 'Amsterdam';

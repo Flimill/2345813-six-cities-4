@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { setError, setLoadingStatus } from '../../../store/action';
-import { statusReducer } from '../../../store/reducers/status-reducer';
+import { setError, setLoadingStatus } from '../action';
+import { statusReducer } from './status-reducer';
 
 describe('statusReducer', () => {
   it('should return the initial state', () => {

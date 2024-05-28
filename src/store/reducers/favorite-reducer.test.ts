@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { decrementFavoriteNumber, incrementFavoriteNumber, setFavoriteNumber, setFavoriteOfferList, setFavoritesLoading } from '../../../store/action';
-import { OfferCardData } from '../../../types/types'; 
-import { favoriteReducer } from '../../../store/reducers/favorite-reducer';
+import { decrementFavoriteNumber, incrementFavoriteNumber, setFavoriteNumber, setFavoriteOfferList, setFavoritesLoading } from '../action';
+import { OfferCardData } from '../../types/types';
+import { favoriteReducer } from './favorite-reducer';
 
 describe('favoriteReducer', () => {
   it('should return the initial state', () => {

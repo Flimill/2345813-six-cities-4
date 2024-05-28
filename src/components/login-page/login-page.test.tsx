@@ -11,25 +11,25 @@ const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
 describe('Component: LoginPage', () => {
-    it('should render correctly', () => {
-        const store = mockStore({
-          status: { isLoading: false, error: null },
-          user: { authorizationStatus: false },
-        });
-    
-        render(
-          <Provider store={store}>
-            <MemoryRouter>
-              <LoginPage />
-            </MemoryRouter>
-          </Provider>
-        );
-    
-        expect(screen.getByPlaceholderText('Email')).toBeInTheDocument();
-        expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
-        expect(screen.getByRole('heading', { name: /sign in/i })).toBeInTheDocument();
-        expect(screen.getByRole('button', { name: /sign in/i })).toBeInTheDocument();
-      });
+  it('should render correctly', () => {
+    const store = mockStore({
+      status: { isLoading: false, error: null },
+      user: { authorizationStatus: false },
+    });
+
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <LoginPage />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    expect(screen.getByPlaceholderText('Email')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /sign in/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /sign in/i })).toBeInTheDocument();
+  });
 
   it('should show loading message when isLoading is true', () => {
     const store = mockStore({

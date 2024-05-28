@@ -1,6 +1,6 @@
-import { getOfferListByCity, getPointByCity, getSortedList } from '../../utils/offers-util';
-import { OfferCardData } from '../../types/types';
-import { CITY_POINTS } from '../../const/const';
+import { getOfferListByCity, getPointByCity, getSortedList } from './offers-util';
+import { OfferCardData } from '../types/types';
+import { CITY_POINTS } from '../const/const';
 
 const mockOfferList: OfferCardData[] = [
   {

@@ -56,7 +56,6 @@ export const createAPI = (): AxiosInstance => {
 };
 
 
-
 export const api = createAPI();
 
 export const store = configureStore({

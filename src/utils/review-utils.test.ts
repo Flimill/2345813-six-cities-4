@@ -1,4 +1,4 @@
-import { formatDate } from '../../utils/review-utils';
+import { formatDate } from './review-utils';
 
 describe('Review Utils', () => {
   describe('formatDate', () => {

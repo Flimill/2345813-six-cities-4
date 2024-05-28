@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { changeSortingOption, updateCity } from '../../../store/action';
-import { mainPageReducer } from '../../../store/reducers/main-page-reducer';
-import { START_CITY, START_SORTING_OPTION } from '../../../const/const';
+import { changeSortingOption, updateCity } from '../action';
+import { mainPageReducer } from './main-page-reducer';
+import { START_CITY, START_SORTING_OPTION } from '../../const/const';
 
 describe('mainPageReducer', () => {
   it('should return the initial state', () => {

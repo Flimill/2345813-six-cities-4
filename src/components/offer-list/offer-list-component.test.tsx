@@ -55,15 +55,15 @@ const mockOffers: OfferCardData[] = [
 ];
 
 describe('OfferListComponent', () => {
-    it('should render loading message when isLoading is true', () => {
-      const store = mockStore({ status: { isLoading: true }, user: { authorizationStatus: 'authenticated' } });
-      render(
-        <Provider store={store}>
-          <OfferListComponent offers={mockOffers} sortingOption={null} isMapOn={false} />
-        </Provider>
-      );
-      expect(screen.getByText(/Loading/i)).toBeInTheDocument();
-    });
-  
-
+  it('should render loading message when isLoading is true', () => {
+    const store = mockStore({ status: { isLoading: true }, user: { authorizationStatus: 'authenticated' } });
+    render(
+      <Provider store={store}>
+        <OfferListComponent offers={mockOffers} sortingOption={null} isMapOn={false} />
+      </Provider>
+    );
+    expect(screen.getByText(/Loading/i)).toBeInTheDocument();
   });
+
+
+});

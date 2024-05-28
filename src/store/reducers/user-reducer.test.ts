@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { setAuthorizationStatus, setUserData } from '../../../store/action';
-import { userReducer } from '../../../store/reducers/user-reducer';
+import { setAuthorizationStatus, setUserData } from '../action';
+import { userReducer } from './user-reducer';
 
 describe('userReducer', () => {
   it('should return the initial state', () => {

@@ -1,16 +1,16 @@
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import { createAPI } from '../../services/api';
+import { createAPI } from '../services/api';
 import MockAdapter from 'axios-mock-adapter';
 import thunk from 'redux-thunk';
 import { Action } from 'redux';
-import { RootState } from '../../store/index';
-import { fetchOffersAction, fetchNearbyOffersAction, fetchSelectedOffer, fetchReviewsList, sendReviewData, fetchFavoriteOfferList, updateFavoriteStatus, sendLoginData, checkAuth, logoutAction } from '../../store/api-actions';
-import { APIRoute } from '../../const/const';
-import { loadOffers, setAuthorizationStatus, setError, setFavoriteNumber, setFavoriteOfferList, setFavoritesLoading, setLoadingStatus, setReviewLoadingStatus, setReviews, setSelectedOffer, setUserData } from '../../store/action';
-import { FullOfferCardData, LoginData, OfferCardData, ReviewData, Reviews, updateFavoriteData, UserData } from '../../types/types';
-import * as tokenStorage from '../../services/token';
+import { RootState } from './index';
+import { fetchOffersAction, fetchNearbyOffersAction, fetchSelectedOffer, fetchReviewsList, sendReviewData, fetchFavoriteOfferList, updateFavoriteStatus, sendLoginData, checkAuth, logoutAction } from './api-actions';
+import { APIRoute } from '../const/const';
+import { loadOffers, setAuthorizationStatus, setError, setFavoriteNumber, setFavoriteOfferList, setFavoritesLoading, setLoadingStatus, setReviewLoadingStatus, setReviews, setSelectedOffer, setUserData } from './action';
+import { FullOfferCardData, LoginData, OfferCardData, ReviewData, Reviews, updateFavoriteData, UserData } from '../types/types';
+import * as tokenStorage from '../services/token';
 import { ThunkDispatch } from '@reduxjs/toolkit';
-import { extractActionsTypes } from '../ut/mocks';
+import { extractActionsTypes } from './ut/mocks';
 
 export type AppThunkDispatch = ThunkDispatch<RootState, ReturnType<typeof createAPI>, Action>;
 
@@ -31,7 +31,7 @@ describe('Async actions', () => {
       mockAxiosAdapter.onGet(APIRoute.Offers).reply(200, mockOffers);
 
       await store.dispatch(fetchOffersAction());
-      const actions = extractActionsTypes(store.getActions());
+      const actions: string[] = extractActionsTypes(store.getActions());
       expect(actions).toEqual([
         fetchOffersAction.pending.type,
         setLoadingStatus.type,
@@ -158,23 +158,23 @@ describe('Async actions', () => {
       ]);
     });
     it('should dispatch setAuthorizationStatus, setUserData and saveToken when server responds with data', async () => {
-        const mockLoginData: LoginData = { email: 'test@test.com', password: '123456' };
-        const mockUserData: UserData = { email: 'test@test.com', token: 'secret', name: 'Test User', avatarUrl: '', isPro: false };
-        mockAxiosAdapter.onPost(APIRoute.Login).reply(200, mockUserData);
-        const mockSaveToken = vi.spyOn(tokenStorage, 'saveToken');
-  
-        await store.dispatch(sendLoginData(mockLoginData));
-        const actions = extractActionsTypes(store.getActions());
-        expect(actions).toEqual([
-          sendLoginData.pending.type,
-          setAuthorizationStatus.type,
-          setUserData.type,
-          sendLoginData.fulfilled.type,
-        ]);
-  
-        expect(mockSaveToken).toBeCalledTimes(1);
-        expect(mockSaveToken).toBeCalledWith(mockUserData.token);
-      });
+      const mockLoginData: LoginData = { email: 'test@test.com', password: '123456' };
+      const mockUserData: UserData = { email: 'test@test.com', token: 'secret', name: 'Test User', avatarUrl: '', isPro: false };
+      mockAxiosAdapter.onPost(APIRoute.Login).reply(200, mockUserData);
+      const mockSaveToken = vi.spyOn(tokenStorage, 'saveToken');
+
+      await store.dispatch(sendLoginData(mockLoginData));
+      const actions = extractActionsTypes(store.getActions());
+      expect(actions).toEqual([
+        sendLoginData.pending.type,
+        setAuthorizationStatus.type,
+        setUserData.type,
+        sendLoginData.fulfilled.type,
+      ]);
+
+      expect(mockSaveToken).toBeCalledTimes(1);
+      expect(mockSaveToken).toBeCalledWith(mockUserData.token);
+    });
   });
 
   describe('checkAuth', () => {
@@ -208,19 +208,19 @@ describe('Async actions', () => {
       ]);
     });
     it('should call "dropToken" once with "logoutAction"', async () => {
-        mockAxiosAdapter.onDelete(APIRoute.Logout).reply(204);
-        const mockDropToken = vi.spyOn(tokenStorage, 'dropToken');
-  
-        await store.dispatch(logoutAction());
-        const actions = extractActionsTypes(store.getActions());
-  
-        expect(actions).toEqual([
-          logoutAction.pending.type,
-          setAuthorizationStatus.type,
-          logoutAction.fulfilled.type,
-        ]);
-  
-        expect(mockDropToken).toBeCalledTimes(1);
-      });
+      mockAxiosAdapter.onDelete(APIRoute.Logout).reply(204);
+      const mockDropToken = vi.spyOn(tokenStorage, 'dropToken');
+
+      await store.dispatch(logoutAction());
+      const actions = extractActionsTypes(store.getActions());
+
+      expect(actions).toEqual([
+        logoutAction.pending.type,
+        setAuthorizationStatus.type,
+        logoutAction.fulfilled.type,
+      ]);
+
+      expect(mockDropToken).toBeCalledTimes(1);
+    });
   });
 });

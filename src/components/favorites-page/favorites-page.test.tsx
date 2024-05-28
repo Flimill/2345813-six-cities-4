@@ -28,7 +28,7 @@ describe('FavoritesPage', () => {
     expect(screen.getByText(/Nothing yet saved/i)).toBeInTheDocument();
   });
 
- 
+
 });
 
 

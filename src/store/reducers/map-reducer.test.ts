@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { changeSelectedPoint } from '../../../store/action';
-import { mapReducer } from '../../../store/reducers/map-reducer';
-import { Point } from '../../../types/types';
+import { changeSelectedPoint } from '../action';
+import { mapReducer } from './map-reducer';
+import { Point } from '../../types/types';
 
 describe('mapReducer', () => {
   it('should return the initial state', () => {

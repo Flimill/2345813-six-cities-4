@@ -43,7 +43,7 @@ describe('Component: OfferCard', () => {
 
     render(
       <Provider store={store}>
-        <OfferCard isAuth={true} offer={mockOffer} isMapOn={false} />
+        <OfferCard isAuth offer={mockOffer} isMapOn={false} />
       </Provider>
     );
 
@@ -55,7 +55,6 @@ describe('Component: OfferCard', () => {
     expect(screen.getByText('Test Offer')).toBeInTheDocument();
     expect(screen.getByText('Apartment')).toBeInTheDocument();
   });
-
 
 
   it('should redirect to login when bookmark button is clicked and user is not authenticated', async () => {
@@ -72,7 +71,7 @@ describe('Component: OfferCard', () => {
     const bookmarkButton = screen.getByRole('button', { name: /in bookmarks/i });
     await userEvent.click(bookmarkButton);
 
-    
+
     expect(window.location.pathname).toBe('/login'); // Меняем на строку адреса, которая должна быть в случае перенаправления
   });
 
@@ -81,7 +80,7 @@ describe('Component: OfferCard', () => {
 
     render(
       <Provider store={store}>
-        <OfferCard isAuth={true} offer={mockOffer} isMapOn={false} />
+        <OfferCard isAuth offer={mockOffer} isMapOn={false} />
       </Provider>
     );
 
@@ -96,7 +95,7 @@ describe('Component: OfferCard', () => {
 
     render(
       <Provider store={store}>
-        <OfferCard isAuth={true} offer={mockOffer} isMapOn={false} />
+        <OfferCard isAuth offer={mockOffer} isMapOn={false} />
       </Provider>
     );
 
@@ -115,7 +114,7 @@ describe('Component: OfferCard', () => {
 
     render(
       <Provider store={store}>
-        <OfferCard isAuth={true} offer={mockOffer} isMapOn={true} />
+        <OfferCard isAuth offer={mockOffer} isMapOn />
       </Provider>
     );
 

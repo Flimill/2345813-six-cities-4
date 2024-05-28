@@ -6,7 +6,7 @@ describe('useMap hook', () => {
   it('should return null initially', () => {
     const mapRef: { current: HTMLElement | null } = { current: null };
     const city: City = {
-        name: 'A',
+      name: 'A',
       location: { latitude: 40.7128, longitude: -74.006, zoom: 10 }
     };
 
@@ -22,7 +22,7 @@ describe('useMap hook', () => {
   it('should render map after initialization', () => {
     const mapRef: { current: HTMLElement | null } = { current: document.createElement('div') };
     const city: City = {
-        name: 'B',
+      name: 'B',
       location: { latitude: 40.7128, longitude: -74.006, zoom: 10 }
     };
 
@@ -38,7 +38,7 @@ describe('useMap hook', () => {
   it('should not render map if mapRef is null', () => {
     const mapRef: { current: HTMLElement | null } = { current: null };
     const city: City = {
-        name: 'C',
+      name: 'C',
       location: { latitude: 40.7128, longitude: -74.006, zoom: 10 }
     };
 
