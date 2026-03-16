@@ -27,7 +27,8 @@ function FavoritesPage(): JSX.Element {
     if (!cities[city]) {
       cities[city] = [];
     }
-    cities[city].push(favorite);
+    cities[city]!.push(favorite);
+
     return cities;
   }, {});
 
@@ -64,7 +65,9 @@ function FavoritesPage(): JSX.Element {
                       </div>
                     </div>
                     <div className="favorites__places">
-                      <MemoizedFavoriteList favorites={groupedFavorites[cityName]} />
+                      {groupedFavorites[cityName] && (
+                        <MemoizedFavoriteList favorites={groupedFavorites[cityName]!} />
+                      )}
                     </div>
                   </li>
                 ))}

@@ -35,7 +35,7 @@ function OfferCard({ isAuth, offer,isMapOn }: OfferCardProps): JSX.Element {
 
       setIsBookmarkActive(!isBookmarkActive);
 
-      store.dispatch(updateFavoriteStatus({ offerId: offer.id, status: !isBookmarkActive ? 1 : 0 }));
+      void store.dispatch(updateFavoriteStatus({ offerId: offer.id, status: !isBookmarkActive ? 1 : 0 }));
     } else {
       setRedirectToLogin(true);
     }

@@ -9,11 +9,11 @@ function AuthorizedUserHeader(): JSX.Element {
   const favoriteNumber = useSelector((state: RootState) => state.favorite.favoriteNumber);
 
   useEffect(() => {
-    store.dispatch(fetchFavoriteOfferList());
+    void store.dispatch(fetchFavoriteOfferList());
   }, []);
 
   const handleClick = () => {
-    store.dispatch(logoutAction());
+    void store.dispatch(logoutAction());
   };
   return(
     <>

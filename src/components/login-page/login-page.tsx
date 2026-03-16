@@ -26,7 +26,7 @@ function LoginPage(): JSX.Element {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    store.dispatch(sendLoginData({ email, password }));
+    void store.dispatch(sendLoginData({ email, password }));
   };
 
   if (isLoading) {
@@ -89,7 +89,7 @@ function LoginPage(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href={InternalRoute.Main} onClick={() => saveSelectedCity(city)}>
+              <a className="locations__item-link" href={InternalRoute.Main} onClick={() => city && saveSelectedCity(city)}>
                 <span>{city}</span>
               </a>
             </div>

@@ -26,7 +26,7 @@ function MainPage(): JSX.Element {
 
 
   useEffect(() => {
-    store.dispatch(fetchOffersAction());
+    void store.dispatch(fetchOffersAction());
   }, []);
 
   useEffect(() => {

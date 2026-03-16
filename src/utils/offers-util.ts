@@ -10,7 +10,7 @@ export function getPointByCity(city:string, offerList:OfferCardData[]): City {
   if (cityPoint) {
     return cityPoint;
   } else {
-    return CITY_POINTS[city];
+    return CITY_POINTS[city]!;
   }
 }
 

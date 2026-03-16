@@ -122,7 +122,7 @@ export const sendReviewData = createAsyncThunk<void, ReviewData, {
     try {
       dispatch(setReviewLoadingStatus(true));
       await api.post(`${APIRoute.Reviews}/${offerId}`, { comment, rating });
-      store.dispatch(fetchReviewsList(offerId));
+      void store.dispatch(fetchReviewsList(offerId));
       dispatch(setError(''));
     } catch (err) {
       handleError(dispatch,err);
@@ -161,7 +161,7 @@ export const updateFavoriteStatus = createAsyncThunk<void, updateFavoriteData, {
   async ({ offerId, status }, { dispatch, extra: api }) => {
     try {
       await api.post<OfferCardData[]>(`${APIRoute.Favorite}/${offerId}/${status}`);
-      store.dispatch(fetchFavoriteOfferList());
+      void store.dispatch(fetchFavoriteOfferList());
     } catch (err) {
       handleError(dispatch,err);
     }

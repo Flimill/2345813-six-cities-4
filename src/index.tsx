@@ -6,7 +6,7 @@ import { store } from './store/index';
 import { Provider } from 'react-redux';
 import { checkAuth } from './store/api-actions';
 
-store.dispatch(checkAuth());
+void store.dispatch(checkAuth());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

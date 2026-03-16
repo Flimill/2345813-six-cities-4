@@ -13,7 +13,7 @@ const StatusCodeMapping: Record<number, boolean> = {
   [StatusCodes.UNAUTHORIZED]: true,
   [StatusCodes.NOT_FOUND]: true
 };
-
+// eslint-disable-next-line
 const shouldDisplayError = (response: AxiosResponse) => !!StatusCodeMapping[response.status];
 
 const BACKEND_URL = 'https://14.design.htmlacademy.pro/six-cities';
@@ -28,7 +28,7 @@ export const createAPI = (): AxiosInstance => {
   api.interceptors.request.use(
     (config) => {
       const token = getToken();
-
+      // eslint-disable-next-line
       if (token && config.headers) {
         config.headers['x-token'] = token;
       }

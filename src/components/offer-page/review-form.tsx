@@ -42,7 +42,7 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
     event.preventDefault();
     if (review.length >= 50 && rating > 0) {
       setIsSubmitting(true);
-      store.dispatch(sendReviewData({ offerId, comment: review, rating }));
+      void store.dispatch(sendReviewData({ offerId, comment: review, rating }));
     }
   };
 

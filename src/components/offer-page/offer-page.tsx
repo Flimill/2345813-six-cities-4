@@ -12,7 +12,7 @@ import MemoizedOfferListComponent from '../offer-list/offer-list-component';
 import MemoizedImageList from './image-list';
 import { changeSelectedPoint, decrementFavoriteNumber, incrementFavoriteNumber } from '../../store/action';
 import ErrorMessage from '../error-message/error-message';
-
+// eslint-disable-next-line no-console
 function OfferPage(): JSX.Element {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -25,10 +25,11 @@ function OfferPage(): JSX.Element {
   const [redirectToLogin, setRedirectToLogin] = useState(false);
 
   useEffect(() => {
-    if (id) {
-      store.dispatch(fetchSelectedOffer(id));
-      store.dispatch(fetchNearbyOffersAction(id));
-      store.dispatch(fetchReviewsList(id));
+    // eslint-disable-next-line
+    if (id?.trim()) {
+      void store.dispatch(fetchSelectedOffer(id));
+      void store.dispatch(fetchNearbyOffersAction(id));
+      void store.dispatch(fetchReviewsList(id));
     }
   }, [id]);
 
@@ -50,7 +51,7 @@ function OfferPage(): JSX.Element {
   }
 
   let offersCity: string = START_CITY;
-  if (selectedOffer) {
+  if (selectedOffer !== null) {
     offersCity = selectedOffer.city.name;
   }
 
@@ -63,7 +64,7 @@ function OfferPage(): JSX.Element {
       }
 
       setIsBookmarkActive(!isBookmarkActive);
-      store.dispatch(updateFavoriteStatus({ offerId: selectedOffer.id, status: !isBookmarkActive ? 1 : 0 }));
+      void store.dispatch(updateFavoriteStatus({ offerId: selectedOffer.id, status: !isBookmarkActive ? 1 : 0 }));
     } else {
       setRedirectToLogin(true);
     }
@@ -163,7 +164,9 @@ function OfferPage(): JSX.Element {
             </div>
           </div>
           <section className="offer__map map">
-            {<Map city={CITY_POINTS[offersCity]} points={points} mapSize={OFFER_MAP_SIZE} />}
+            {CITY_POINTS[offersCity] && (
+            <Map city={CITY_POINTS[offersCity]!} points={points} mapSize={OFFER_MAP_SIZE} />
+            )}
           </section>
         </section>
         <div className="container">

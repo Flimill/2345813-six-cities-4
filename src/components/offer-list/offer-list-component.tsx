@@ -20,7 +20,8 @@ function OfferListComponent({ sortingOption, offers, isMapOn }: OfferListCompone
     return <span className="uploading">{LoadingMessage.Offers}</span>;
   } else {
     let sortedOffers = offers;
-    if(sortingOption){
+    // eslint-disable-next-line
+    if(sortingOption?.trim()){
       sortedOffers = getSortedList(offers, sortingOption);
     }
     return (

@@ -23,7 +23,7 @@ function FavoriteCard({ favorite }: FavoriteCardProps): JSX.Element {
 
     setIsBookmarkActive(!isBookmarkActive);
 
-    store.dispatch(updateFavoriteStatus({ offerId: favorite.id, status: !isBookmarkActive ? 1 : 0 }));
+    void store.dispatch(updateFavoriteStatus({ offerId: favorite.id, status: !isBookmarkActive ? 1 : 0 }));
   };
 
   const ratingWidth = `${(Math.round(favorite.rating) / MAX_RATING) * 100 }%`;
