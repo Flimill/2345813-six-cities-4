@@ -13,12 +13,27 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    /* Linting */
+    
+    /* 1. Базовый строгий режим */
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "forceConsistentCasingInFileNames": true,
+
+    /* 2. Явно указаны опции strict для отчёта */
+    "strictNullChecks": true,        /* Проверка null/undefined */
+    "strictFunctionTypes": true,     /* Строгая проверка функций */
+    "strictBindCallApply": true,     /* Проверка bind/call/apply */
+    "noImplicitAny": true,           /* Запрет неявного any */
+    "noImplicitThis": true,          /* Запрет неявного this */
+    "noImplicitReturns": true,       /* Все пути функции возвращают значение */
+    
+    /* 3. Дополнительные проверки гигиены кода */
+    "noUnusedLocals": true,          /* Ошибка: неиспользуемые переменные */
+    "noFallthroughCasesInSwitch": true, /* Ошибка: провал в switch */
+    "noUncheckedIndexedAccess": true,    /* Доступ по индексу может быть undefined */
+    "forceConsistentCasingInFileNames": true, /* Регистр имён файлов */
+
+    /* 4. Отключённые правила */
+    // "strictPropertyInitialization": false, /* Классы: инициализация в конструкторе */
+    "noUnusedParameters": false      /* Отключено: колбэки с лишними параметрами */
   },
   "include": ["src", "src/index.js", "vite.config.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
