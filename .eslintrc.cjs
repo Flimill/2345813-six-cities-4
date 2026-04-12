@@ -23,7 +23,7 @@ module.exports = {
     react: { version: 'detect' },
   },
   
-  // === ПРАВИЛА ДЛЯ КУРСОВОЙ РАБОТЫ ===
+
   rules: {
     // Базовые правила
     'react-refresh/only-export-components': 'warn',
